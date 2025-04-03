@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ProcessedGame } from "../../shared/interfaces/game.interface";
 import GameCard from "../../components/GameCard";
-import HorizontalScroller from "../../components/HorizontalScrollContainer";
+import HorizontalScrollContainer from "../../components/HorizontalScrollContainer";
 import LoadingState from "../../components/LoadingState";
 
 export default function LatestGames() {
@@ -10,12 +10,15 @@ export default function LatestGames() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getGames = async () => {
+    const getGamesFetch = async () => {
       setLoading(true);
       try {
-        //const data = await fetchLatestGames();
-        //setGames(data);
-        console.log("Fetching latest games...");
+        const data = await fetch(
+          `${import.meta.env.SERVER_API_URL}/igdb/latest`
+        );
+        const resData = await data.json();
+        // setGames(resData);
+        console.log(resData);
       } catch (error) {
         console.error("Error fetching latest games:", error);
         setError(
@@ -28,7 +31,7 @@ export default function LatestGames() {
       }
     };
 
-    getGames();
+    getGamesFetch();
   }, []);
 
   if (loading) {
@@ -54,7 +57,7 @@ export default function LatestGames() {
       {games.length === 0 ? (
         <p className="uk-text-muted">No recently released games found.</p>
       ) : (
-        <HorizontalScroller>
+        <HorizontalScrollContainer>
           {games.map((game) => (
             <GameCard
               key={game.id}
@@ -66,7 +69,7 @@ export default function LatestGames() {
               }
             />
           ))}
-        </HorizontalScroller>
+        </HorizontalScrollContainer>
       )}
     </div>
   );

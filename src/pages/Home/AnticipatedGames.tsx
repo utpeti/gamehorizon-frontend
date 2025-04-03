@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { ProcessedGame } from "../../shared/interfaces/game.interface";
 import GameCard from "../../components/GameCard";
-import HorizontalScroller from "../../components/HorizontalScrollContainer";
+import HorizontalScrollContainer from "../../components/HorizontalScrollContainer";
 import LoadingState from "../../components/LoadingState";
 
 export default function AnticipatedGames() {
@@ -10,12 +10,15 @@ export default function AnticipatedGames() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getGames = async () => {
+    const getGamesFetch = async () => {
       setLoading(true);
       try {
-        //const data = await fetchAnticipatedGames();
-        //setGames(data);
-        console.log("Fetching anticipated games...");
+        const data = await fetch(
+          `${import.meta.env.SERVER_API_URL}/igdb/anticipated`
+        );
+        const resData = await data.json();
+        //setGames(resData);
+        console.log(resData);
       } catch (error) {
         console.error("Error fetching anticipated games:", error);
         setError(
@@ -28,7 +31,7 @@ export default function AnticipatedGames() {
       }
     };
 
-    getGames();
+    getGamesFetch();
   }, []);
 
   if (loading) {
@@ -54,7 +57,7 @@ export default function AnticipatedGames() {
       {games.length === 0 ? (
         <p className="uk-text-muted">No anticipated games found.</p>
       ) : (
-        <HorizontalScroller>
+        <HorizontalScrollContainer>
           {games.map((game) => (
             <GameCard
               key={game.id}
@@ -67,7 +70,7 @@ export default function AnticipatedGames() {
               }
             />
           ))}
-        </HorizontalScroller>
+        </HorizontalScrollContainer>
       )}
     </div>
   );

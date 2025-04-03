@@ -10,12 +10,15 @@ export default function UpcomingEvents() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getEvents = async () => {
+    const getEventsFetch = async () => {
       setLoading(true);
       try {
-        //const data = await fetchEvents();
-        //setEvents(data);
-        console.log("Fetching upcoming events...");
+        const data = await fetch(
+          `${import.meta.env.SERVER_API_URL}/igdb/events`
+        );
+        const resData = await data.json();
+        //setEvents(resData);
+        console.log(resData);
       } catch (error) {
         console.error("Error fetching upcoming events:", error);
         setError(
@@ -28,7 +31,7 @@ export default function UpcomingEvents() {
       }
     };
 
-    getEvents();
+    getEventsFetch();
   }, []);
 
   if (loading) {
