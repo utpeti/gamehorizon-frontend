@@ -14,10 +14,10 @@ export default function LatestGames() {
       setLoading(true);
       try {
         const data = await fetch(
-          `${import.meta.env.SERVER_API_URL}/igdb/latest`
+          `${import.meta.env.VITE_SERVER_API_URL}/igdb/latest`
         );
         const resData = await data.json();
-        // setGames(resData);
+        setGames(resData);
         console.log(resData);
       } catch (error) {
         console.error("Error fetching latest games:", error);
