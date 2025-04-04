@@ -1,40 +1,48 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, JSX } from "react";
 import { ProcessedGame } from "../../shared/interfaces/game.interface";
 import GameCard from "../../components/GameCard";
 import HorizontalScrollContainer from "../../components/HorizontalScrollContainer";
 import LoadingState from "../../components/LoadingState";
 
-export default function LatestGames() {
+interface GamesContainerProps {
+  endpoint: string;
+  title: string;
+  formatExtraInfo: (game: ProcessedGame) => JSX.Element;
+}
+
+export default function GamesContainer({
+  endpoint,
+  title,
+  formatExtraInfo,
+}: GamesContainerProps) {
   const [games, setGames] = useState<ProcessedGame[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getGamesFetch = async () => {
+    const fetchGames = async () => {
       setLoading(true);
       try {
-        const data = await fetch(
-          `${import.meta.env.VITE_SERVER_API_URL}/igdb/latest`
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_API_URL}/igdb/${endpoint}`
         );
-        const resData = await data.json();
+        const resData = await response.json();
         setGames(resData);
-      } catch (error) {
-        console.error("Error fetching latest games:", error);
+      } catch (err) {
+        console.error(`Error fetching ${title}:`, err);
         setError(
-          error instanceof Error
-            ? error.message
-            : "Failed to fetch latest games"
+          err instanceof Error ? err.message : `Failed to fetch ${title}`
         );
       } finally {
         setLoading(false);
       }
     };
 
-    getGamesFetch();
-  }, []);
+    fetchGames();
+  }, [endpoint, title]);
 
   if (loading) {
-    return <LoadingState message="Loading latest games..." />;
+    return <LoadingState message={`Loading ${title.toLowerCase()}...`} />;
   }
 
   if (error) {
@@ -49,17 +57,17 @@ export default function LatestGames() {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold text-[#F3E8EE]">Latest Releases</h2>
+      <h2 className="text-3xl font-bold text-[#F3E8EE]">{title}</h2>
 
       {games.length === 0 ? (
-        <p className="text-gray-500">No recently released games found.</p>
+        <p className="text-gray-500">No {title.toLowerCase()} found.</p>
       ) : (
         <HorizontalScrollContainer>
           {games.map((game) => (
             <GameCard
               key={game.id}
               game={game}
-              extraInfo={<p>Release date: {game.release_date}</p>}
+              extraInfo={formatExtraInfo(game)}
             />
           ))}
         </HorizontalScrollContainer>
