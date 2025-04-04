@@ -14,7 +14,7 @@ export default function AnticipatedGames() {
       setLoading(true);
       try {
         const data = await fetch(
-          `${import.meta.env.SERVER_API_URL}/igdb/anticipated`
+          `${import.meta.env.VITE_SERVER_API_URL}/igdb/anticipated`
         );
         const resData = await data.json();
         setGames(resData);

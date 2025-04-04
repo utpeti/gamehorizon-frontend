@@ -27,7 +27,7 @@ export default function GameCard({ game, extraInfo }: GameCardProps) {
           <h3 className="text-[#F3E8EE] text-lg font-semibold truncate">
             {game.name}
           </h3>
-          {extraInfo}
+          <div className="text-sm text-gray-400 mt-1">{extraInfo}</div>
         </div>
       </div>
     </div>

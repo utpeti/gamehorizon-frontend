@@ -14,9 +14,10 @@ export default function UpcomingEvents() {
       setLoading(true);
       try {
         const data = await fetch(
-          `${import.meta.env.SERVER_API_URL}/igdb/events`
+          `${import.meta.env.VITE_SERVER_API_URL}/igdb/events`
         );
         const resData = await data.json();
+        console.log(resData);
         setEvents(resData);
       } catch (error) {
         console.error("Error fetching upcoming events:", error);
