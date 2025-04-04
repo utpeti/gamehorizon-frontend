@@ -18,3 +18,5 @@ stats.html
 *.ntvs*
 *.njsproj
 *.sln
+
+.env
