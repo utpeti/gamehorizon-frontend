@@ -18,7 +18,6 @@ export default function LatestGames() {
         );
         const resData = await data.json();
         setGames(resData);
-        console.log(resData);
       } catch (error) {
         console.error("Error fetching latest games:", error);
         setError(

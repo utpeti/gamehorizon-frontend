@@ -13,12 +13,11 @@ export default function AnticipatedGames() {
     const getGamesFetch = async () => {
       setLoading(true);
       try {
-        // const data = await fetch(
-        //   `${import.meta.env.SERVER_API_URL}/igdb/anticipated`
-        // );
-        // const resData = await data.json();
-        // setGames(resData);
-        // console.log(resData);
+        const data = await fetch(
+          `${import.meta.env.SERVER_API_URL}/igdb/anticipated`
+        );
+        const resData = await data.json();
+        setGames(resData);
       } catch (error) {
         console.error("Error fetching anticipated games:", error);
         setError(
