@@ -16,4 +16,11 @@ export interface ProcessedGame extends Game {
   coverUrl: string;
 }
 
-export interface DetailedGame extends Game {}
+export interface DetailedGame extends Game {
+  summary: string;
+  screenshots: {
+    id: number;
+    image_id: string;
+    url: string;
+  }[];
+}

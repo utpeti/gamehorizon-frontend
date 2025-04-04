@@ -1,7 +1,9 @@
+import HorizontalScrollContainer from "../../components/HorizontalScrollContainer";
 import {
   ProcessedGame,
   DetailedGame,
 } from "../../shared/interfaces/game.interface";
+import { useState, useEffect } from "react";
 
 interface GameDetailedProps {
   loadingGameDetails: boolean;
@@ -16,32 +18,63 @@ export default function GamesDetailed({
   closeModal,
   gameDetails,
 }: GameDetailedProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  useEffect(() => {
+    setIsOpen(true);
+  }, []);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      closeModal();
+    }, 600);
+  };
+
+  console.log("Game Details:", gameDetails);
+
   return (
-    <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-80 z-50 flex justify-center items-center">
-      <div className="bg-white p-8 w-full h-full overflow-y-auto">
+    <div
+      className={`fixed top-0 left-0 right-0 bottom-0 bg-opacity-80 z-50 flex justify-center items-center backdrop-blur-md transition-opacity duration-600 ${
+        isOpen && !isClosing ? "opacity-100" : "opacity-0"
+      }`}
+      onClick={handleClose}
+    >
+      <div
+        className={`bg-blue-950 p-8 w-[75%] max-h-[90%] overflow-y-auto relative rounded-lg transition-transform duration-600 transform ${
+          isOpen && !isClosing ? "scale-100 opacity-100" : "scale-95 opacity-0"
+        }`}
+        onClick={(e) => e.stopPropagation()}
+      >
         {loadingGameDetails ? (
           <div className="text-center text-white">Loading game details...</div>
         ) : (
           <div>
             <button
-              onClick={closeModal}
-              className="text-gray-500 p-2 text-xl absolute top-0 right-0"
+              onClick={handleClose}
+              className="text-gray-500 p-2 text-xl absolute top-2 right-2"
             >
               X
             </button>
             <h2 className="text-3xl font-bold text-[#F3E8EE]">
               {selectedGame?.name || "Unknown Game"}
             </h2>
-            <div className="my-4">
-              <img
-                src={selectedGame?.coverUrl}
-                alt={selectedGame?.name}
-                className="w-full h-80 object-cover"
-              />
+            <div className="mt-4">
+              <HorizontalScrollContainer>
+                {gameDetails?.screenshots.map((screenshot, index) => (
+                  <img
+                    key={index}
+                    src={screenshot.url}
+                    alt={`Screenshot ${index + 1}`}
+                    className="w-full h-auto rounded-lg mb-2"
+                  />
+                ))}
+              </HorizontalScrollContainer>
             </div>
             <div className="text-sm text-gray-600">
               <p>
-                <strong>Description:</strong> Game description goes here.
+                <strong>Description:</strong> {gameDetails?.summary}
               </p>
             </div>
           </div>
