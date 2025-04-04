@@ -7,6 +7,7 @@ import LoadingState from "../../components/LoadingState";
 interface GamesContainerProps {
   endpoint: string;
   title: string;
+  onGameClick: (game: ProcessedGame) => void;
   formatExtraInfo: (game: ProcessedGame) => JSX.Element;
 }
 
@@ -14,6 +15,7 @@ export default function GamesContainer({
   endpoint,
   title,
   formatExtraInfo,
+  onGameClick,
 }: GamesContainerProps) {
   const [games, setGames] = useState<ProcessedGame[]>([]);
   const [loading, setLoading] = useState(true);
@@ -68,6 +70,7 @@ export default function GamesContainer({
               key={game.id}
               game={game}
               extraInfo={formatExtraInfo(game)}
+              onClick={() => onGameClick(game)}
             />
           ))}
         </HorizontalScrollContainer>

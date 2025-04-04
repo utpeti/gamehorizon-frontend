@@ -15,3 +15,5 @@ export interface ProcessedGame extends Game {
   release_date: string;
   coverUrl: string;
 }
+
+export interface DetailedGame extends Game {}

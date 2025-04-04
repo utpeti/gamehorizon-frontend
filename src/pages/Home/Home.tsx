@@ -1,8 +1,39 @@
+import { useState } from "react";
 import GamesContainer from "./GamesContainer";
 import UpcomingEvents from "./UpcomingEvents";
 import { ProcessedGame } from "../../shared/interfaces/game.interface";
+import GamesDetailed from "./GamesDetailed";
 
 function HomePage() {
+  const [selectedGame, setSelectedGame] = useState<ProcessedGame | null>(null);
+  const [loadingGameDetails, setLoadingGameDetails] = useState(false);
+  const [gameDetails, setGameDetails] = useState<any>(null);
+
+  const fetchGameDetails = async (gameId: number) => {
+    setLoadingGameDetails(true);
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_API_URL}/igdb/game-details/${gameId}`
+      );
+      const data = await response.json();
+      setGameDetails(data); // Set the detailed game data
+    } catch (err) {
+      console.error("Error fetching game details:", err);
+    } finally {
+      setLoadingGameDetails(false);
+    }
+  };
+
+  const handleGameClick = (game: ProcessedGame) => {
+    setSelectedGame(game);
+    fetchGameDetails(game.id);
+  };
+
+  const closeModal = () => {
+    setSelectedGame(null);
+    setGameDetails(null);
+  };
+
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-cover bg-no-repeat">
       <div className="w-4/5 mx-auto mb-16">
@@ -12,6 +43,7 @@ function HomePage() {
           formatExtraInfo={(game: ProcessedGame) => (
             <p>Release date: {game.release_date}</p>
           )}
+          onGameClick={handleGameClick}
         />
       </div>
 
@@ -25,12 +57,22 @@ function HomePage() {
               Hype Score: {game.hypes}
             </p>
           )}
+          onGameClick={handleGameClick}
         />
       </div>
 
       <div className="w-4/5 mx-auto mb-16">
         <UpcomingEvents />
       </div>
+
+      {selectedGame && (
+        <GamesDetailed
+          loadingGameDetails={loadingGameDetails}
+          selectedGame={selectedGame}
+          gameDetails={gameDetails}
+          closeModal={closeModal}
+        />
+      )}
     </div>
   );
 }

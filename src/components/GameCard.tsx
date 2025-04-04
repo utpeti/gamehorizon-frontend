@@ -3,14 +3,16 @@ import { ProcessedGame } from "../shared/interfaces/game.interface";
 interface GameCardProps {
   game: ProcessedGame;
   extraInfo?: React.ReactNode;
+  onClick?: () => void;
 }
 
-export default function GameCard({ game, extraInfo }: GameCardProps) {
+export default function GameCard({ game, extraInfo, onClick }: GameCardProps) {
   return (
     <div className="inline-block mr-2" style={{ width: "250px" }}>
       <div
         className="bg-[#1e2e33] rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
         style={{ height: "430px" }}
+        onClick={onClick}
       >
         <div
           className="relative"
