@@ -40,8 +40,8 @@ export default function LatestGames() {
 
   if (error) {
     return (
-      <div className="uk-container uk-margin-top">
-        <div className="uk-alert uk-alert-danger">
+      <div className="container mx-auto mt-4">
+        <div className="bg-red-500 text-white p-4 rounded-lg">
           <p>Error: {error}</p>
         </div>
       </div>
@@ -50,23 +50,17 @@ export default function LatestGames() {
 
   return (
     <div>
-      <h2 className="uk-heading-small" style={{ color: "#F3E8EE" }}>
-        Latest Releases
-      </h2>
+      <h2 className="text-3xl font-bold text-[#F3E8EE]">Latest Releases</h2>
 
       {games.length === 0 ? (
-        <p className="uk-text-muted">No recently released games found.</p>
+        <p className="text-gray-500">No recently released games found.</p>
       ) : (
         <HorizontalScrollContainer>
           {games.map((game) => (
             <GameCard
               key={game.id}
               game={game}
-              extraInfo={
-                <p className="uk-text-meta uk-margin-remove-top">
-                  Release date: {game.release_date}
-                </p>
-              }
+              extraInfo={<p>Release date: {game.release_date}</p>}
             />
           ))}
         </HorizontalScrollContainer>

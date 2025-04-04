@@ -6,8 +6,8 @@ export default function LoadingState({
   message = "Loading...",
 }: LoadingStateProps) {
   return (
-    <div className="uk-container uk-margin-top uk-text-center">
-      <div uk-spinner="ratio: 2"></div>
+    <div className="text-center container mx-auto mt-4">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-200 mx-auto"></div>
       <p>{message}</p>
     </div>
   );

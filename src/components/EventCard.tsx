@@ -28,42 +28,30 @@ export default function EventCard({ event, extraInfo }: EventCardProps) {
   };
 
   return (
-    <div
-      className="uk-inline-block uk-margin-small-right"
-      style={{ width: "333px" }}
-    >
+    <div className="inline-block mr-2" style={{ width: "333px" }}>
       <div
-        className="uk-card uk-card-default uk-card-hover event-card"
+        className={`bg-[#1e2e33] rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 ${
+          event.live_stream_url ? "cursor-pointer" : "cursor-default"
+        }`}
         onClick={handleCardClick}
         role="button"
         tabIndex={0}
         aria-label={`View ${event.name}`}
-        style={{
-          cursor: event.live_stream_url ? "pointer" : "default",
-          height: "430px",
-          backgroundColor: "#1e2e33",
-          position: "relative",
-        }}
+        style={{ height: "430px", position: "relative" }}
         data-tooltip-id={event.live_stream_url ? tooltipId : undefined}
       >
-        <div
-          className="uk-card-media-top"
-          style={{ height: "333px", position: "relative" }}
-        >
+        <div className="relative" style={{ height: "333px" }}>
           <img
             src={event.logoUrl}
             alt={event.name}
             width={333}
             height={333}
             sizes="250px"
-            style={{ width: "100%", height: "100%" }}
+            className="w-full h-full object-cover rounded-t-lg"
           />
         </div>
-        <div className="uk-card-body uk-padding-small">
-          <h3
-            className="uk-card-title uk-margin-remove-bottom uk-text-truncate"
-            style={{ fontSize: "1.2rem", color: "#F3E8EE" }}
-          >
+        <div className="p-2">
+          <h3 className="text-[#F3E8EE] text-lg font-semibold truncate">
             {event.name}
           </h3>
           {extraInfo}
@@ -78,9 +66,7 @@ export default function EventCard({ event, extraInfo }: EventCardProps) {
           className="event-tooltip"
         >
           <div>
-            <p style={{ margin: 0, color: "#ff4081", fontWeight: "bold" }}>
-              Click to watch
-            </p>
+            <p className="m-0 text-pink-500 font-bold">Click to watch</p>
           </div>
         </Tooltip>
       )}

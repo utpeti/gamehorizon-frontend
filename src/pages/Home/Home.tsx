@@ -4,24 +4,16 @@ import UpcomingEvents from "./UpcomingEvents";
 
 function HomePage() {
   return (
-    <div
-      className="uk-container uk-background-muted uk-height-viewport uk-width-1-1 uk-"
-      style={{
-        background:
-          "linear-gradient(135deg,rgb(14, 17, 20),rgb(36, 46, 51),rgb(49, 56, 56))",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="uk-margin-large-bottom uk-width-4-5 uk-margin-auto">
+    <div className="w-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-cover bg-no-repeat">
+      <div className="w-4/5 mx-auto mb-16">
         <LatestGames />
       </div>
 
-      <div className="uk-margin-large-bottom uk-width-4-5 uk-margin-auto">
+      <div className="w-4/5 mx-auto mb-16">
         <AnticipatedGames />
       </div>
 
-      <div className="uk-margin-large-bottom uk-width-4-5 uk-margin-auto">
+      <div className="w-4/5 mx-auto mb-16">
         <UpcomingEvents />
       </div>
     </div>

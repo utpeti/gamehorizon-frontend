@@ -50,12 +50,10 @@ export default function AnticipatedGames() {
 
   return (
     <div>
-      <h2 className="uk-heading-small" style={{ color: "#F3E8EE" }}>
-        Most Anticipated
-      </h2>
+      <h2 className="text-3xl font-bold text-[#F3E8EE]">Most Anticipated</h2>
 
       {games.length === 0 ? (
-        <p className="uk-text-muted">No anticipated games found.</p>
+        <p className="text-gray-500">No anticipated games found.</p>
       ) : (
         <HorizontalScrollContainer>
           {games.map((game) => (
@@ -63,8 +61,8 @@ export default function AnticipatedGames() {
               key={game.id}
               game={game}
               extraInfo={
-                <p className="uk-text-meta uk-margin-remove-top">
-                  Coming on: {game.release_date} <br></br>
+                <p className="text-sm text-gray-400 mt-1">
+                  Coming on: {game.release_date} <br />
                   Hype Score: {game.hypes}
                 </p>
               }

@@ -30,10 +30,10 @@ export default function HorizontalScrollContainer({
   }, []);
 
   return (
-    <div className="uk-position-relative uk-margin-medium-bottom">
+    <div className="position: relative; mb-2">
       <div
         ref={scrollContainerRef}
-        className="uk-overflow-auto"
+        className="overflow-auto"
         style={{
           scrollbarWidth: "thin",
           msOverflowStyle: "none",
@@ -45,10 +45,8 @@ export default function HorizontalScrollContainer({
         {children}
       </div>
 
-      <div className="uk-text-center uk-text-muted uk-margin-small-top">
-        <span uk-icon="icon: arrow-left"></span>
+      <div className="text-center text-muted mt-2">
         Scroll horizontally to see more games
-        <span uk-icon="icon: arrow-right"></span>
       </div>
     </div>
   );

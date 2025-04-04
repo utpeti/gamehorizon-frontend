@@ -40,8 +40,8 @@ export default function UpcomingEvents() {
 
   if (error) {
     return (
-      <div className="uk-container uk-margin-top">
-        <div className="uk-alert uk-alert-danger">
+      <div className="container mx-auto mt-4">
+        <div className="bg-red-500 text-white p-4 rounded-lg">
           <p>Error: {error}</p>
         </div>
       </div>
@@ -50,12 +50,10 @@ export default function UpcomingEvents() {
 
   return (
     <div>
-      <h2 className="uk-heading-small" style={{ color: "#F3E8EE" }}>
-        Upcoming Events
-      </h2>
+      <h2 className="text-3xl font-bold text-[#F3E8EE]">Upcoming Events</h2>
 
       {events.length === 0 ? (
-        <p className="uk-text-muted">No upcoming events found.</p>
+        <p className="text-gray-500">No upcoming events found.</p>
       ) : (
         <HorizontalScrollContainer>
           {events.map((event) => (
@@ -63,9 +61,8 @@ export default function UpcomingEvents() {
               key={event.id}
               event={event}
               extraInfo={
-                <p className="uk-text-meta uk-margin-remove-top">
-                  Starting on: {event.start_date}
-                  <br></br>
+                <p className="text-sm text-gray-400 mt-1">
+                  Starting on: {event.start_date} <br />
                   Ends on: {event.end_date}
                 </p>
               }

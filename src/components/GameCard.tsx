@@ -7,30 +7,24 @@ interface GameCardProps {
 
 export default function GameCard({ game, extraInfo }: GameCardProps) {
   return (
-    <div
-      className="uk-inline-block uk-margin-small-right"
-      style={{ width: "250px" }}
-    >
+    <div className="inline-block mr-2" style={{ width: "250px" }}>
       <div
-        className="uk-card uk-card-default uk-card-hover"
-        style={{ height: "430px", backgroundColor: "#1e2e33" }}
+        className="bg-[#1e2e33] rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+        style={{ height: "430px" }}
       >
         <div
-          className="uk-card-media-top"
+          className="relative"
           style={{ height: "333px", position: "relative" }}
         >
           <img
             src={game.coverUrl}
             alt={game.name}
             sizes="250px"
-            style={{ objectFit: "cover", objectPosition: "center" }}
+            className="object-contain object-center w-full h-full rounded-t-lg"
           />
         </div>
-        <div className="uk-card-body uk-padding-small">
-          <h3
-            className="uk-card-title uk-margin-remove-bottom uk-text-truncate"
-            style={{ fontSize: "1.2rem", color: "#F3E8EE" }}
-          >
+        <div className="p-2">
+          <h3 className="text-[#F3E8EE] text-lg font-semibold truncate">
             {game.name}
           </h3>
           {extraInfo}
