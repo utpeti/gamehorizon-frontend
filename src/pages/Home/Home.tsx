@@ -36,7 +36,15 @@ function HomePage() {
   };
 
   return (
-    <div className="w-full h-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-cover bg-no-repeat">
+    <div className="min-h-screen w-full bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
+      <div>
+        <h1 className="text-4xl font-bold text-[#F3E8EE] text-center mb-8">
+          Welcome to GameHorizon
+        </h1>
+        <p className="text-lg text-[#F3E8EE] text-center mb-16">
+          All that's gaming in one place
+        </p>
+      </div>
       <div className="w-4/5 mx-auto mb-16">
         <GamesContainer
           endpoint="latest"

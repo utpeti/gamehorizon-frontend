@@ -59,7 +59,7 @@ export default function GamesContainer({
 
   return (
     <div>
-      <h2 className="text-3xl font-bold text-[#F3E8EE]">{title}</h2>
+      <h2 className="text-3xl font-bold text-[#F3E8EE] mb-3 mt-3">{title}</h2>
 
       {games.length === 0 ? (
         <p className="text-gray-500">No {title.toLowerCase()} found.</p>
