@@ -64,7 +64,7 @@ export default function GamesContainer({
       {games.length === 0 ? (
         <p className="text-gray-500">No {title.toLowerCase()} found.</p>
       ) : (
-        <HorizontalScrollContainer>
+        <HorizontalScrollContainer scrollDistance={250}>
           {games.map((game) => (
             <GameCard
               key={game.id}

@@ -22,15 +22,10 @@ export default function GamesDetailed({
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
-  // Add effect to disable body scrolling when modal is open
   useEffect(() => {
-    // Save original overflow style
     const originalStyle = window.getComputedStyle(document.body).overflow;
-
-    // Disable scrolling on body when modal opens
     document.body.style.overflow = "hidden";
 
-    // Re-enable scrolling when component unmounts
     return () => {
       document.body.style.overflow = originalStyle;
     };
@@ -43,7 +38,6 @@ export default function GamesDetailed({
   const handleClose = () => {
     setIsClosing(true);
     setTimeout(() => {
-      // Re-enable scrolling before unmounting
       document.body.style.overflow = "auto";
       closeModal();
     }, 600);
@@ -78,7 +72,7 @@ export default function GamesDetailed({
               {selectedGame?.name || "Unknown Game"}
             </h2>
             <div className="mt-4">
-              <HorizontalScrollContainer>
+              <HorizontalScrollContainer scrollDistance={700}>
                 {gameDetails?.videos?.map((video) => (
                   <MediaCard
                     key={video.id}
