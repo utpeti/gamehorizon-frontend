@@ -104,7 +104,7 @@ export default function GamesDetailed({
               )}
             </div>
             <div className="flex flex-col md:flex-row mt-4">
-              <div className="text-sm text-gray-300 w-2xl">
+              <div className="text-base text-gray-300 w-2xl">
                 {gameDetails.genres && gameDetails.genres.length > 0 && (
                   <DetailBlob>
                     <p>
@@ -143,7 +143,25 @@ export default function GamesDetailed({
                   </DetailBlob>
                 )}
               </div>
-              {/* ide majd a ratingek */}
+              <div className="ml-4 mr-4 text-base text-gray-300 w-2xl">
+                <DetailBlob>
+                  <h1>Ratings</h1>
+                  {gameDetails.aggregated_rating ? (
+                    <>
+                      <p>
+                        <strong>{gameDetails.aggregated_rating}/100</strong>
+                      </p>
+                      <p>
+                        <strong>
+                          {gameDetails.aggregated_rating_count} ratings
+                        </strong>
+                      </p>
+                    </>
+                  ) : (
+                    <p>No ratings yet</p>
+                  )}
+                </DetailBlob>
+              </div>
             </div>
           </div>
         )}
