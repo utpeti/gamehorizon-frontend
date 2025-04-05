@@ -22,6 +22,20 @@ export default function GamesDetailed({
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
+  // Add effect to disable body scrolling when modal is open
+  useEffect(() => {
+    // Save original overflow style
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+
+    // Disable scrolling on body when modal opens
+    document.body.style.overflow = "hidden";
+
+    // Re-enable scrolling when component unmounts
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, []);
+
   useEffect(() => {
     setIsOpen(true);
   }, []);
@@ -29,6 +43,8 @@ export default function GamesDetailed({
   const handleClose = () => {
     setIsClosing(true);
     setTimeout(() => {
+      // Re-enable scrolling before unmounting
+      document.body.style.overflow = "auto";
       closeModal();
     }, 600);
   };
@@ -37,7 +53,7 @@ export default function GamesDetailed({
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 bottom-0 bg-opacity-80 z-50 flex justify-center items-center backdrop-blur-md transition-opacity duration-600 ${
+      className={`fixed inset-0 z-50 flex justify-center items-center bg-black/60 backdrop-blur-lg transition-opacity duration-600 ${
         isOpen && !isClosing ? "opacity-100" : "opacity-0"
       }`}
       onClick={handleClose}
