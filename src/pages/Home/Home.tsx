@@ -16,6 +16,7 @@ function HomePage() {
         `${import.meta.env.VITE_SERVER_API_URL}/igdb/game-details/${gameId}`
       );
       const data = await response.json();
+      console.log("Game Details:", data);
       setGameDetails(data);
     } catch (err) {
       console.error("Error fetching game details:", err);

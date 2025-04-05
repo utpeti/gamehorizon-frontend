@@ -1,5 +1,3 @@
-import { Media } from "./media.interface";
-
 export interface Game {
   id: number;
   name: string;
@@ -20,5 +18,14 @@ export interface ProcessedGame extends Game {
 
 export interface DetailedGame extends Game {
   summary: string;
-  media: Media;
+  screenshots: {
+    id: number;
+    image_id: string;
+    url: string;
+  }[];
+  videos: {
+    id: number;
+    video_id: string;
+    url: string;
+  }[];
 }

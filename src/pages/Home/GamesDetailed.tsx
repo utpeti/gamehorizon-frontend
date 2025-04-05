@@ -63,18 +63,7 @@ export default function GamesDetailed({
             </h2>
             <div className="mt-4">
               <HorizontalScrollContainer>
-                {gameDetails?.media.screenshots.map((screenshot) => (
-                  <MediaCard
-                    key={screenshot.id}
-                    media={{
-                      id: screenshot.id,
-                      media_id: screenshot.image_id,
-                      url: screenshot.url,
-                    }}
-                    type="image"
-                  />
-                ))}
-                {gameDetails?.media.videos.map((video) => (
+                {gameDetails?.videos?.map((video) => (
                   <MediaCard
                     key={video.id}
                     media={{
@@ -83,6 +72,17 @@ export default function GamesDetailed({
                       url: video.url,
                     }}
                     type="video"
+                  />
+                ))}
+                {gameDetails?.screenshots?.map((screenshot) => (
+                  <MediaCard
+                    key={screenshot.id}
+                    media={{
+                      id: screenshot.id,
+                      media_id: screenshot.image_id,
+                      url: screenshot.url,
+                    }}
+                    type="image"
                   />
                 ))}
               </HorizontalScrollContainer>
