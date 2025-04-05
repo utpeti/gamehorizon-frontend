@@ -5,6 +5,7 @@ import {
   DetailedGame,
 } from "../../shared/interfaces/game.interface";
 import { useState, useEffect } from "react";
+import DetailBlob from "./DetailBlob";
 
 interface GameDetailedProps {
   loadingGameDetails: boolean;
@@ -102,34 +103,47 @@ export default function GamesDetailed({
                 <p className="text-gray-500">No media available.</p>
               )}
             </div>
-            <div className="text-sm text-gray-300">
-              {gameDetails.genres && gameDetails.genres.length > 0 && (
-                <p>
-                  <strong>Genres:</strong>{" "}
-                  {gameDetails.genres.map((genre) => genre.name).join(", ")}
-                </p>
-              )}
-              {gameDetails.platforms && gameDetails.platforms.length > 0 && (
-                <p>
-                  <strong>Platforms:</strong>{" "}
-                  {gameDetails.platforms
-                    .map((platform) => platform.name)
-                    .join(", ")}
-                </p>
-              )}
-              <p>
-                <strong>Release Date:</strong> {gameDetails.release_date}
-              </p>
-              {gameDetails.summary && (
-                <p>
-                  <strong>Description:</strong> {gameDetails.summary}
-                </p>
-              )}
-              {gameDetails.storyline && (
-                <p>
-                  <strong>Storyline:</strong> {gameDetails.storyline}
-                </p>
-              )}
+            <div className="flex flex-col md:flex-row mt-4">
+              <div className="text-sm text-gray-300 w-2xl">
+                {gameDetails.genres && gameDetails.genres.length > 0 && (
+                  <DetailBlob>
+                    <p>
+                      <strong>Genres:</strong>{" "}
+                      {gameDetails.genres.map((genre) => genre.name).join(", ")}
+                    </p>
+                  </DetailBlob>
+                )}
+                {gameDetails.platforms && gameDetails.platforms.length > 0 && (
+                  <DetailBlob>
+                    <p>
+                      <strong>Platforms:</strong>{" "}
+                      {gameDetails.platforms
+                        .map((platform) => platform.name)
+                        .join(", ")}
+                    </p>
+                  </DetailBlob>
+                )}
+                <DetailBlob>
+                  <p>
+                    <strong>Release Date:</strong> {gameDetails.release_date}
+                  </p>
+                </DetailBlob>
+                {gameDetails.summary && (
+                  <DetailBlob>
+                    <p>
+                      <strong>Description:</strong> {gameDetails.summary}
+                    </p>
+                  </DetailBlob>
+                )}
+                {gameDetails.storyline && (
+                  <DetailBlob>
+                    <p>
+                      <strong>Storyline:</strong> {gameDetails.storyline}
+                    </p>
+                  </DetailBlob>
+                )}
+              </div>
+              {/* ide majd a ratingek */}
             </div>
           </div>
         )}
