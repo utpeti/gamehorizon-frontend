@@ -69,7 +69,7 @@ export default function HorizontalScrollContainer({
       {showLeftArrow && (
         <button
           onClick={scrollLeft}
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-blue-900/80 hover:bg-blue-800 text-white rounded-r-lg p-2 z-10"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-indigo-500 hover:bg-indigo-800 text-white opacity-80 rounded-r-lg p-2 z-10"
           aria-label="Scroll left"
         >
           <svg
@@ -106,7 +106,7 @@ export default function HorizontalScrollContainer({
       {showRightArrow && (
         <button
           onClick={scrollRight}
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-blue-900/80 hover:bg-blue-800 text-white rounded-l-lg p-2 z-10"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-indigo-500 hover:bg-indigo-800 text-white opacity-80 rounded-l-lg p-2 z-10"
           aria-label="Scroll right"
         >
           <svg

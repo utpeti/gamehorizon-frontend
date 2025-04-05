@@ -6,3 +6,19 @@ body {
   margin: 0;
   padding: 0;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ded7f8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #565c5f;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9775ec;
+}

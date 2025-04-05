@@ -10,7 +10,7 @@ export default function GameCard({ game, extraInfo, onClick }: GameCardProps) {
   return (
     <div className="inline-block mr-2" style={{ width: "250px" }}>
       <div
-        className="bg-[#1e2e33] rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+        className="bg-gradient-to-b from-indigo-950 via-stone-700 to-stone-950 rounded-lg shadow-xl hover:shadow-xl transition-all duration-200 hover:rounded-xl hover:scale-103 cursor-pointer hover:bg-[#1e2e33]/80"
         style={{ height: "430px" }}
         onClick={onClick}
       >

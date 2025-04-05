@@ -38,7 +38,7 @@ function HomePage() {
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
       <div>
-        <h1 className="text-4xl font-bold text-[#F3E8EE] text-center mb-8">
+        <h1 className="text-4xl font-bold text-[#F3E8EE] text-center mb-8 pt-8">
           Welcome to GameHorizon
         </h1>
         <p className="text-lg text-[#F3E8EE] text-center mb-16">
