@@ -1,15 +1,31 @@
+import { useRef, useState } from "react";
 import InputSection from "./InputSection";
 
 function Login() {
+  const [userInputValue, setUserInputValue] = useState<string>("");
+  const [passwordInputValue, setPasswordInputValue] = useState<string>("");
+  const userInputRef = useRef<HTMLInputElement>(null);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
+
+  function handleChange() {
+    if (userInputRef.current) {
+      setUserInputValue(userInputRef.current.value);
+    }
+    if (passwordInputRef.current) {
+      setPasswordInputValue(passwordInputRef.current.value);
+    }
+  }
+
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
       <div className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-4xl font-bold text-[#F3E8EE] mb-8">Login</h1>
         <form className="bg-white p-6 rounded-lg shadow-md w-96">
-          <InputSection labelText="email" />
-          <InputSection labelText="password" />
+          <InputSection labelText="email" inputRef={userInputRef} />
+          <InputSection labelText="password" inputRef={passwordInputRef} />
           <button
             type="submit"
+            onClick={handleChange}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
           >
             Login
