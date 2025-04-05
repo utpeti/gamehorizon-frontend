@@ -1,4 +1,5 @@
 import HorizontalScrollContainer from "../../components/HorizontalScrollContainer";
+import MediaCard from "../../components/MediaCard";
 import {
   ProcessedGame,
   DetailedGame,
@@ -62,12 +63,26 @@ export default function GamesDetailed({
             </h2>
             <div className="mt-4">
               <HorizontalScrollContainer>
-                {gameDetails?.screenshots.map((screenshot, index) => (
-                  <img
-                    key={index}
-                    src={screenshot.url}
-                    alt={`Screenshot ${index + 1}`}
-                    className="w-full h-auto rounded-lg mb-2"
+                {gameDetails?.media.screenshots.map((screenshot) => (
+                  <MediaCard
+                    key={screenshot.id}
+                    media={{
+                      id: screenshot.id,
+                      media_id: screenshot.image_id,
+                      url: screenshot.url,
+                    }}
+                    type="image"
+                  />
+                ))}
+                {gameDetails?.media.videos.map((video) => (
+                  <MediaCard
+                    key={video.id}
+                    media={{
+                      id: video.id,
+                      media_id: video.video_id,
+                      url: video.url,
+                    }}
+                    type="video"
                   />
                 ))}
               </HorizontalScrollContainer>

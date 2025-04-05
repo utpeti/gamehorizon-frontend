@@ -1,6 +1,6 @@
 import { useState } from "react";
 import GamesContainer from "./GamesContainer";
-import UpcomingEvents from "./UpcomingEvents";
+import UpcomingEvents from "./EventsContainer";
 import { ProcessedGame } from "../../shared/interfaces/game.interface";
 import GamesDetailed from "./GamesDetailed";
 
