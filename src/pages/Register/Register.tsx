@@ -17,7 +17,7 @@ function Register() {
     event.preventDefault();
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SERVER_API_URL}/user/login`,
+        `${import.meta.env.VITE_SERVER_API_URL}/user/register`,
         {
           method: "POST",
           headers: {
@@ -30,6 +30,12 @@ function Register() {
         }
       );
       const resData = await response.json();
+      if (response.status !== 200) {
+        throw new Error(resData.message || "Failed to register");
+      }
+      if (resData.status === "success") {
+        console.log("Registration successful");
+      }
     } catch (err) {
       console.error("Error while logging in", err);
       setError(err instanceof Error ? err.message : "Failed to login");
