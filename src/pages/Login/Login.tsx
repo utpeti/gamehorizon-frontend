@@ -4,8 +4,8 @@ import InputSection from "../../components/InputSection";
 function Login() {
   const [userInputValue, setUserInputValue] = useState<string>("");
   const [passwordInputValue, setPasswordInputValue] = useState<string>("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [, setLoading] = useState(true);
+  const [, setError] = useState<string | null>(null);
   const userInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
@@ -27,6 +27,15 @@ function Login() {
         }
       );
       const resData = await response.json();
+      console.log("Response data:", resData);
+      console.log("Response status:", response.status);
+      if (response.status === 200) {
+        localStorage.setItem("token", resData.token);
+        window.location.href = "/";
+      }
+      if (response.status !== 200) {
+        throw new Error(resData.message || "Failed to login");
+      }
     } catch (err) {
       console.error("Error while logging in", err);
       setError(err instanceof Error ? err.message : "Failed to login");

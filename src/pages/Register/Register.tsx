@@ -6,8 +6,8 @@ function Register() {
   const [passwordInputValue, setPasswordInputValue] = useState<string>("");
   const [confirmPasswordInputValue, setConfirmPasswordInputValue] =
     useState<string>("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [, setLoading] = useState(true);
+  const [, setError] = useState<string | null>(null);
   const userInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const confirmPasswordInputRef = useRef<HTMLInputElement>(null);
@@ -29,12 +29,8 @@ function Register() {
           }),
         }
       );
-      const resData = await response.json();
-      if (response.status !== 200) {
-        throw new Error(resData.message || "Failed to register");
-      }
-      if (resData.status === "success") {
-        console.log("Registration successful");
+      if (response.status === 201) {
+        window.location.href = "/login";
       }
     } catch (err) {
       console.error("Error while logging in", err);
