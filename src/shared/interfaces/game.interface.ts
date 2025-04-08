@@ -9,6 +9,7 @@ export interface Game {
     image_id: string;
     url: string;
   };
+  isFavorite: boolean;
 }
 
 export interface ProcessedGame extends Game {

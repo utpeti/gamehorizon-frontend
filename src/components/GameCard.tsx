@@ -18,11 +18,26 @@ export default function GameCard({ game, extraInfo, onClick }: GameCardProps) {
           className="relative"
           style={{ height: "333px", position: "relative" }}
         >
+          <div className="absolute top-2 right-2">
+            <svg
+              className="h-8 w-8 text-red-500"
+              fill={game.isFavorite ? "red" : "none"}
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </svg>
+          </div>
           <img
             src={game.coverUrl}
             alt={game.name}
             sizes="250px"
-            className="object-contain object-center w-full h-full rounded-t-lg"
+            className="object-fill object-center w-full h-full rounded-t-lg"
           />
         </div>
         <div className="p-2">
