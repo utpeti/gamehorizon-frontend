@@ -5,6 +5,7 @@ interface GameCardProps {
   extraInfo?: React.ReactNode;
   onClick?: () => void;
   onClickFav?: () => void;
+  isFavorite?: boolean;
 }
 
 export default function GameCard({
@@ -12,6 +13,7 @@ export default function GameCard({
   extraInfo,
   onClick,
   onClickFav,
+  isFavorite,
 }: GameCardProps) {
   return (
     <div className="inline-block mr-2" style={{ width: "250px" }}>
@@ -36,7 +38,7 @@ export default function GameCard({
             >
               <svg
                 className="h-8 w-8 text-red-500"
-                fill="none"
+                fill={isFavorite ? "red" : "none"}
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >

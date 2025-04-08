@@ -8,7 +8,7 @@ function HomePage() {
   const [selectedGame, setSelectedGame] = useState<ProcessedGame | null>(null);
   const [loadingGameDetails, setLoadingGameDetails] = useState(false);
   const [gameDetails, setGameDetails] = useState<any>(null);
-  const [userFavorites, setUserFavorites] = useState<ProcessedGame[]>([]);
+  const [userFavorites, setUserFavorites] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchUserFavorites = async () => {
@@ -24,7 +24,6 @@ function HomePage() {
           }
         );
         const data = await response.json();
-        console.log("User favorites:", data);
         setUserFavorites(data);
       } catch (error) {
         console.error("Error fetching user favorites:", error);
@@ -48,7 +47,7 @@ function HomePage() {
     }
   };
 
-  const addNewFavorite = async (gameId: number) => {
+  const addNewFavorite = async (gameId: number, game: ProcessedGame) => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
@@ -58,40 +57,19 @@ function HomePage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ gameId: gameId }),
+          body: JSON.stringify({ gameId }),
         }
       );
       if (response.status === 201) {
-        const data = await response.json();
-        console.log("Added to favorites:", data);
-      } else {
-        console.error("Failed to add to favorites:", response.status);
+        setUserFavorites((prev) =>
+          prev.some((fav) => fav === game.id) ? prev : [...prev, game.id]
+        );
+      } else if (response.status === 400) {
+        const newFavs = userFavorites.filter((fav) => fav !== game.id);
+        setUserFavorites(newFavs);
       }
     } catch (error) {
       console.error("Error adding to favorites:", error);
-    }
-  };
-
-  const removeFavorite = async (gameId: number) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
-        {
-          method: "DELETE",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ gameId: gameId }),
-        }
-      );
-      if (response.status === 200) {
-        console.log("Removed from favorites");
-      } else {
-        console.error("Failed to remove from favorites:", response.status);
-      }
-    } catch (error) {
-      console.error("Error removing from favorites:", error);
     }
   };
 
@@ -101,16 +79,11 @@ function HomePage() {
   };
 
   const handleGameClickFav = (game: ProcessedGame) => {
-    const isFavorite = userFavorites.some((fav) => fav.id === game.id);
+    const isFavorite = userFavorites.some((fav) => fav === game.id);
     if (isFavorite) {
-      setUserFavorites((prev) => prev.filter((fav) => fav.id !== game.id));
-      removeFavorite(game.id);
-    } else {
-      setUserFavorites((prev) => [...prev, game]);
-      addNewFavorite(game.id);
+      setUserFavorites((prev) => prev.filter((fav) => fav !== game.id));
     }
-
-    console.log("Game clicked:", game);
+    addNewFavorite(game.id, game);
   };
 
   const closeModal = () => {
@@ -137,6 +110,7 @@ function HomePage() {
           )}
           onGameClick={handleGameClick}
           onGameClickFav={handleGameClickFav}
+          favs={userFavorites}
         />
       </div>
 
@@ -152,6 +126,7 @@ function HomePage() {
           )}
           onGameClick={handleGameClick}
           onGameClickFav={handleGameClickFav}
+          favs={userFavorites}
         />
       </div>
 
