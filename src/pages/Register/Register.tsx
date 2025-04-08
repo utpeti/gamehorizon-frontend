@@ -17,7 +17,7 @@ function Register() {
     event.preventDefault();
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SERVER_API_URL}/user/register`,
+        `${import.meta.env.VITE_SERVER_API_URL}/users/register`,
         {
           method: "POST",
           headers: {

@@ -14,7 +14,14 @@ export default function UpcomingEvents() {
       setLoading(true);
       try {
         const data = await fetch(
-          `${import.meta.env.VITE_SERVER_API_URL}/igdb/events`
+          `${import.meta.env.VITE_SERVER_API_URL}/igdb/events`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
         const resData = await data.json();
         console.log(resData);

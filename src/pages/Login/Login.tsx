@@ -14,9 +14,10 @@ function Login() {
     event.preventDefault();
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_SERVER_API_URL}/user/login`,
+        `${import.meta.env.VITE_SERVER_API_URL}/users/login`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
