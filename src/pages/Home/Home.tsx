@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GamesContainer from "./GamesContainer";
 import UpcomingEvents from "./EventsContainer";
 import { ProcessedGame } from "../../shared/interfaces/game.interface";
@@ -8,6 +8,30 @@ function HomePage() {
   const [selectedGame, setSelectedGame] = useState<ProcessedGame | null>(null);
   const [loadingGameDetails, setLoadingGameDetails] = useState(false);
   const [gameDetails, setGameDetails] = useState<any>(null);
+  const [userFavorites, setUserFavorites] = useState<ProcessedGame[]>([]);
+
+  useEffect(() => {
+    const fetchUserFavorites = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        console.log("User favorites:", data);
+        setUserFavorites(data);
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
+      }
+    };
+    fetchUserFavorites();
+  }, []);
 
   const fetchGameDetails = async (gameId: number) => {
     setLoadingGameDetails(true);
@@ -16,7 +40,6 @@ function HomePage() {
         `${import.meta.env.VITE_SERVER_API_URL}/igdb/game-details/${gameId}`
       );
       const data = await response.json();
-      console.log("Game Details:", data);
       setGameDetails(data);
     } catch (err) {
       console.error("Error fetching game details:", err);
@@ -25,9 +48,69 @@ function HomePage() {
     }
   };
 
+  const addNewFavorite = async (gameId: number) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ gameId: gameId }),
+        }
+      );
+      if (response.status === 201) {
+        const data = await response.json();
+        console.log("Added to favorites:", data);
+      } else {
+        console.error("Failed to add to favorites:", response.status);
+      }
+    } catch (error) {
+      console.error("Error adding to favorites:", error);
+    }
+  };
+
+  const removeFavorite = async (gameId: number) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
+        {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ gameId: gameId }),
+        }
+      );
+      if (response.status === 200) {
+        console.log("Removed from favorites");
+      } else {
+        console.error("Failed to remove from favorites:", response.status);
+      }
+    } catch (error) {
+      console.error("Error removing from favorites:", error);
+    }
+  };
+
   const handleGameClick = (game: ProcessedGame) => {
     setSelectedGame(game);
     fetchGameDetails(game.id);
+  };
+
+  const handleGameClickFav = (game: ProcessedGame) => {
+    const isFavorite = userFavorites.some((fav) => fav.id === game.id);
+    if (isFavorite) {
+      setUserFavorites((prev) => prev.filter((fav) => fav.id !== game.id));
+      removeFavorite(game.id);
+    } else {
+      setUserFavorites((prev) => [...prev, game]);
+      addNewFavorite(game.id);
+    }
+
+    console.log("Game clicked:", game);
   };
 
   const closeModal = () => {
@@ -53,6 +136,7 @@ function HomePage() {
             <p>Release date: {game.release_date}</p>
           )}
           onGameClick={handleGameClick}
+          onGameClickFav={handleGameClickFav}
         />
       </div>
 
@@ -67,6 +151,7 @@ function HomePage() {
             </p>
           )}
           onGameClick={handleGameClick}
+          onGameClickFav={handleGameClickFav}
         />
       </div>
 

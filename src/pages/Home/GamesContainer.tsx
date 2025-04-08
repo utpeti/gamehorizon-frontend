@@ -8,6 +8,7 @@ interface GamesContainerProps {
   endpoint: string;
   title: string;
   onGameClick: (game: ProcessedGame) => void;
+  onGameClickFav: (game: ProcessedGame) => void;
   formatExtraInfo: (game: ProcessedGame) => JSX.Element;
 }
 
@@ -16,6 +17,7 @@ export default function GamesContainer({
   title,
   formatExtraInfo,
   onGameClick,
+  onGameClickFav,
 }: GamesContainerProps) {
   const [games, setGames] = useState<ProcessedGame[]>([]);
   const [loading, setLoading] = useState(true);
@@ -71,6 +73,7 @@ export default function GamesContainer({
               game={game}
               extraInfo={formatExtraInfo(game)}
               onClick={() => onGameClick(game)}
+              onClickFav={() => onGameClickFav(game)}
             />
           ))}
         </HorizontalScrollContainer>
