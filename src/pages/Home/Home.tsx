@@ -47,7 +47,7 @@ function HomePage() {
     }
   };
 
-  const addNewFavorite = async (gameId: number, game: ProcessedGame) => {
+  async function addNewFavorite(gameId: number, game: ProcessedGame) {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
@@ -60,18 +60,18 @@ function HomePage() {
           body: JSON.stringify({ gameId }),
         }
       );
+
       if (response.status === 201) {
         setUserFavorites((prev) =>
           prev.some((fav) => fav === game.id) ? prev : [...prev, game.id]
         );
       } else if (response.status === 400) {
-        const newFavs = userFavorites.filter((fav) => fav !== game.id);
-        setUserFavorites(newFavs);
+        setUserFavorites((prev) => prev.filter((fav) => fav !== game.id));
       }
     } catch (error) {
-      console.error("Error adding to favorites:", error);
+      console.error("Error toggling favorite:", error);
     }
-  };
+  }
 
   const handleGameClick = (game: ProcessedGame) => {
     setSelectedGame(game);
@@ -79,10 +79,6 @@ function HomePage() {
   };
 
   const handleGameClickFav = (game: ProcessedGame) => {
-    const isFavorite = userFavorites.some((fav) => fav === game.id);
-    if (isFavorite) {
-      setUserFavorites((prev) => prev.filter((fav) => fav !== game.id));
-    }
     addNewFavorite(game.id, game);
   };
 
