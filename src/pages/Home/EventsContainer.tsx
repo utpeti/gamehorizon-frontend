@@ -24,7 +24,6 @@ export default function UpcomingEvents() {
           }
         );
         const resData = await data.json();
-        console.log(resData);
         setEvents(resData);
       } catch (error) {
         console.error("Error fetching upcoming events:", error);

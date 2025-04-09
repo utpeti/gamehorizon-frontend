@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GamesContainer from "./GamesContainer";
 import UpcomingEvents from "./EventsContainer";
 import { ProcessedGame } from "../../shared/interfaces/game.interface";
@@ -8,6 +8,29 @@ function HomePage() {
   const [selectedGame, setSelectedGame] = useState<ProcessedGame | null>(null);
   const [loadingGameDetails, setLoadingGameDetails] = useState(false);
   const [gameDetails, setGameDetails] = useState<any>(null);
+  const [userFavorites, setUserFavorites] = useState<number[]>([]);
+
+  useEffect(() => {
+    const fetchUserFavorites = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        setUserFavorites(data);
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
+      }
+    };
+    fetchUserFavorites();
+  }, []);
 
   const fetchGameDetails = async (gameId: number) => {
     setLoadingGameDetails(true);
@@ -16,7 +39,6 @@ function HomePage() {
         `${import.meta.env.VITE_SERVER_API_URL}/igdb/game-details/${gameId}`
       );
       const data = await response.json();
-      console.log("Game Details:", data);
       setGameDetails(data);
     } catch (err) {
       console.error("Error fetching game details:", err);
@@ -25,9 +47,39 @@ function HomePage() {
     }
   };
 
+  async function addNewFavorite(gameId: number, game: ProcessedGame) {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ gameId }),
+        }
+      );
+
+      if (response.status === 201) {
+        setUserFavorites((prev) =>
+          prev.some((fav) => fav === game.id) ? prev : [...prev, game.id]
+        );
+      } else if (response.status === 400) {
+        setUserFavorites((prev) => prev.filter((fav) => fav !== game.id));
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  }
+
   const handleGameClick = (game: ProcessedGame) => {
     setSelectedGame(game);
     fetchGameDetails(game.id);
+  };
+
+  const handleGameClickFav = (game: ProcessedGame) => {
+    addNewFavorite(game.id, game);
   };
 
   const closeModal = () => {
@@ -53,6 +105,8 @@ function HomePage() {
             <p>Release date: {game.release_date}</p>
           )}
           onGameClick={handleGameClick}
+          onGameClickFav={handleGameClickFav}
+          favs={userFavorites}
         />
       </div>
 
@@ -67,6 +121,8 @@ function HomePage() {
             </p>
           )}
           onGameClick={handleGameClick}
+          onGameClickFav={handleGameClickFav}
+          favs={userFavorites}
         />
       </div>
 

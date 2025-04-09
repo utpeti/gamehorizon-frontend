@@ -8,7 +8,9 @@ interface GamesContainerProps {
   endpoint: string;
   title: string;
   onGameClick: (game: ProcessedGame) => void;
+  onGameClickFav: (game: ProcessedGame) => void;
   formatExtraInfo: (game: ProcessedGame) => JSX.Element;
+  favs: number[];
 }
 
 export default function GamesContainer({
@@ -16,6 +18,8 @@ export default function GamesContainer({
   title,
   formatExtraInfo,
   onGameClick,
+  onGameClickFav,
+  favs,
 }: GamesContainerProps) {
   const [games, setGames] = useState<ProcessedGame[]>([]);
   const [loading, setLoading] = useState(true);
@@ -57,6 +61,8 @@ export default function GamesContainer({
     );
   }
 
+  console.log(favs);
+
   return (
     <div>
       <h2 className="text-3xl font-bold text-[#F3E8EE] mb-3 mt-3">{title}</h2>
@@ -71,6 +77,8 @@ export default function GamesContainer({
               game={game}
               extraInfo={formatExtraInfo(game)}
               onClick={() => onGameClick(game)}
+              onClickFav={() => onGameClickFav(game)}
+              isFavorite={favs.some((fav) => fav === game.id)}
             />
           ))}
         </HorizontalScrollContainer>
