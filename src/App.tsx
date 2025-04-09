@@ -1,19 +1,28 @@
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  useLocation,
+} from "react-router-dom";
 import HomePage from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Navbar from "./components/Navbar";
 
-const Layout = () => {
+function Layout() {
+  const location = useLocation();
+  const hideNavbarRoutes = ["/login", "/register"];
+  const showNavbar = !hideNavbarRoutes.includes(location.pathname);
+
   return (
     <>
-      <Navbar />
-      <div>
+      {showNavbar && <Navbar />}
+      <div className={showNavbar ? "pt-16" : ""}>
         <Outlet />
       </div>
     </>
   );
-};
+}
 
 const router = createBrowserRouter([
   {
