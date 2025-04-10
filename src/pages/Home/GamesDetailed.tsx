@@ -41,20 +41,20 @@ export default function GamesDetailed({
     setTimeout(() => {
       document.body.style.overflow = "auto";
       closeModal();
-    }, 600);
+    }, 400);
   };
 
   console.log("Game Details:", gameDetails);
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-center items-center bg-black/60 backdrop-blur-lg transition-opacity duration-600 ${
+      className={`fixed inset-0 z-50 flex justify-center items-center bg-black/60 backdrop-blur-lg transition-opacity duration-400 ${
         isOpen && !isClosing ? "opacity-100" : "opacity-0"
       }`}
       onClick={handleClose}
     >
       <div
-        className={`bg-linear-to-t from-stone-700 to-indigo-900 p-8 w-[75%] max-h-[90%] overflow-y-auto relative rounded-lg transition-transform duration-600 transform ${
+        className={`bg-linear-to-t from-stone-700 to-indigo-900 p-8 w-[75%] max-h-[90%] overflow-y-auto relative rounded-lg transition-transform duration-400 transform ${
           isOpen && !isClosing ? "scale-100 opacity-100" : "scale-95 opacity-0"
         }`}
         onClick={(e) => e.stopPropagation()}
@@ -149,7 +149,9 @@ export default function GamesDetailed({
                   {gameDetails.aggregated_rating ? (
                     <>
                       <p>
-                        <strong>{gameDetails.aggregated_rating}/100</strong>
+                        <strong>
+                          {Math.round(gameDetails.aggregated_rating)}/100
+                        </strong>
                       </p>
                       <p>
                         <strong>
