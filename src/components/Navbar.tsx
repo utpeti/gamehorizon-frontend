@@ -35,13 +35,7 @@ export default function Navbar() {
               <a href="#">Search</a>
             </li>
             <li className="md:px-4 md:py-2 hover:text-indigo-400">
-              <a href="#">Explore</a>
-            </li>
-            <li className="md:px-4 md:py-2 hover:text-indigo-400">
-              <a href="#">About</a>
-            </li>
-            <li className="md:px-4 md:py-2 hover:text-indigo-400">
-              <a href="#">Contact</a>
+              <button>My Likes</button>
             </li>
           </ul>
         </div>
