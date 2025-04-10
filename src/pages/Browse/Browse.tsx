@@ -106,20 +106,22 @@ function Browse() {
   };
 
   return (
-    <div className="fixed inset-0 overflow-y-auto bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
-      <SearchField searchGames={searchGames} userInputRef={userInputRef} />
-      <div className="flex flex-wrap justify-center items-center p-4 mx-auto">
-        {searchedGames.map((game) => (
-          <div key={game.id} className="mb-4">
-            <GameCard
-              game={game}
-              showFavorite={true}
-              isFavorite={userFavorites.some((fav) => fav === game.id)}
-              onClick={() => handleGameClick(game)}
-              onClickFav={() => handleGameClickFav(game)}
-            />
-          </div>
-        ))}
+    <>
+      <div className="fixed inset-0 overflow-y-auto bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
+        <SearchField searchGames={searchGames} userInputRef={userInputRef} />
+        <div className="flex flex-wrap justify-center items-center p-4 mx-auto">
+          {searchedGames.map((game) => (
+            <div key={game.id} className="mb-4">
+              <GameCard
+                game={game}
+                showFavorite={true}
+                isFavorite={userFavorites.some((fav) => fav === game.id)}
+                onClick={() => handleGameClick(game)}
+                onClickFav={() => handleGameClickFav(game)}
+              />
+            </div>
+          ))}
+        </div>
       </div>
       {selectedGame && (
         <GamesDetailed
@@ -129,7 +131,7 @@ function Browse() {
           closeModal={closeModal}
         />
       )}
-    </div>
+    </>
   );
 }
 
