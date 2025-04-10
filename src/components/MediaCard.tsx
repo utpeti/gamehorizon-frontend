@@ -28,6 +28,7 @@ export default function MediaCard({ media, type }: MediaCardProps) {
             allowFullScreen
             title={media.media_id}
             className="object-contain object-center w-full h-full rounded-t-lg"
+            loading="lazy"
           />
         )}
       </div>
