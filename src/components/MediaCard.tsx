@@ -19,6 +19,7 @@ export default function MediaCard({ media, type }: MediaCardProps) {
             src={media.url}
             alt={media.media_id}
             className="object-contain object-center w-full h-full rounded-t-lg"
+            loading="lazy"
           />
         )}
         {type === "video" && (
@@ -27,7 +28,7 @@ export default function MediaCard({ media, type }: MediaCardProps) {
             allow="autoplay; encrypted-media"
             allowFullScreen
             title={media.media_id}
-            className="object-contain object-center w-full h-full rounded-t-lg"
+            className="object-contain object-center w-full h-full rounded-t-lg will-change-transform"
             loading="lazy"
           />
         )}
