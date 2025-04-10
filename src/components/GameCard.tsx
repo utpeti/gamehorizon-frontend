@@ -7,6 +7,8 @@ interface GameCardProps {
   onClickFav?: () => void;
   isFavorite?: boolean;
   showFavorite: boolean;
+  showRemove?: boolean;
+  onClickRemove?: () => void;
 }
 
 export default function GameCard({
@@ -16,14 +18,11 @@ export default function GameCard({
   onClickFav,
   isFavorite,
   showFavorite,
-  ...additionalProps
+  showRemove,
+  onClickRemove,
 }: GameCardProps) {
   return (
-    <div
-      className="inline-block mr-2"
-      style={{ width: "250px" }}
-      {...additionalProps}
-    >
+    <div className="inline-block mr-2" style={{ width: "250px" }}>
       <div
         className="bg-gradient-to-b from-indigo-950 via-stone-700 to-stone-950 rounded-lg shadow-xl hover:shadow-xl transition-all duration-200 hover:rounded-xl hover:scale-103 cursor-pointer hover:bg-[#1e2e33]/80"
         style={{ height: "430px" }}
@@ -71,7 +70,24 @@ export default function GameCard({
           <h3 className="text-[#F3E8EE] text-lg font-semibold truncate">
             {game.name}
           </h3>
-          <div className="text-sm text-gray-400 mt-1">{extraInfo}</div>
+          <div className="text-sm text-gray-400 mt-1">
+            {extraInfo}
+            {showRemove && (
+              <div className="absolute bottom-2 right-2">
+                <button
+                  className="border-none cursor-pointer hover:bg-indigo-900 p-1 rounded-lg"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (onClickRemove) {
+                      onClickRemove();
+                    }
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
