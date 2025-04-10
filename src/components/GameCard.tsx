@@ -66,14 +66,14 @@ export default function GameCard({
             className="object-fill object-center w-full h-full rounded-t-lg"
           />
         </div>
-        <div className="p-2">
+        <div className="relative p-2">
           <h3 className="text-[#F3E8EE] text-lg font-semibold truncate">
             {game.name}
           </h3>
           <div className="text-sm text-gray-400 mt-1">
             {extraInfo}
             {showRemove && (
-              <div className="absolute bottom-2 right-2">
+              <div className="absolute top-16 right-2">
                 <button
                   className="border-none cursor-pointer hover:bg-indigo-900 p-1 rounded-lg"
                   onClick={(e) => {
