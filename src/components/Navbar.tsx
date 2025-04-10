@@ -21,21 +21,20 @@ export default function Navbar() {
     userLogout();
     navigate("/login");
   }
-
+  //text-indigo-500
   return (
     <nav className="bg-gray-200 shadow shadow-gray-300 w-full px-8 md:px-auto fixed top-0 z-20">
       <div className="md:h-16 h-28 mx-auto md:px-4 container flex items-center justify-between flex-wrap md:flex-nowrap">
-        <div className="text-indigo-500 md:order-1"></div>
         <div className="text-gray-500 order-3 w-full md:w-auto md:order-2">
           <ul className="flex font-semibold justify-between">
-            <li className="md:px-4 md:py-2 text-indigo-500">
+            <li className="md:px-4 md:py-2 hover:text-indigo-400">
               <Link to="/">Home</Link>
             </li>
             <li className="md:px-4 md:py-2 hover:text-indigo-400">
-              <a href="#">Search</a>
+              <Link to="/browse">Browse</Link>
             </li>
             <li className="md:px-4 md:py-2 hover:text-indigo-400">
-              <button>My Likes</button>
+              <Link to="/likes">My Likes</Link>
             </li>
           </ul>
         </div>
