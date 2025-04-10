@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { ProcessedGame } from "../../shared/interfaces/game.interface";
+import {
+  DetailedGame,
+  ProcessedGame,
+} from "../../shared/interfaces/game.interface";
 import GamesDetailed from "../Home/GamesDetailed";
 
 function Likes() {
@@ -30,46 +33,29 @@ function Likes() {
     fetchUserFavorites();
   }, []);
 
-  const fetchGameDetails = async (gameId: number) => {
-    setLoadingGameDetails(true);
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SERVER_API_URL}/igdb/game-details/${gameId}`
-      );
-      const data = await response.json();
-      setGameDetails(data);
-    } catch (err) {
-      console.error("Error fetching game details:", err);
-    } finally {
-      setLoadingGameDetails(false);
-    }
-  };
+  const [favoriteGames, setFavoriteGames] = useState<DetailedGame[]>([]);
 
-  async function addNewFavorite(gameId: number, game: ProcessedGame) {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ gameId }),
-        }
-      );
-
-      if (response.status === 201) {
-        setUserFavorites((prev) =>
-          prev.some((fav) => fav === game.id) ? prev : [...prev, game.id]
+  useEffect(() => {
+    const fetchUserFavorites = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_API_URL}/igdb/liked-games`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
-      } else if (response.status === 400) {
-        setUserFavorites((prev) => prev.filter((fav) => fav !== game.id));
+        const data = await response.json();
+        setFavoriteGames(data);
+      } catch (error) {
+        console.error("Error fetching user favorites:", error);
       }
-    } catch (error) {
-      console.error("Error toggling favorite:", error);
-    }
-  }
+    };
+    fetchUserFavorites();
+  }, []);
 
   const closeModal = () => {
     setSelectedGame(null);
@@ -78,6 +64,10 @@ function Likes() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
+      {favoriteGames.map((game) => (
+        <div>{game.name}</div>
+      ))}
+
       {selectedGame && (
         <GamesDetailed
           loadingGameDetails={loadingGameDetails}
