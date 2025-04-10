@@ -79,6 +79,7 @@ export default function GamesContainer({
               onClick={() => onGameClick(game)}
               onClickFav={() => onGameClickFav(game)}
               isFavorite={favs.some((fav) => fav === game.id)}
+              showFavorite={true}
             />
           ))}
         </HorizontalScrollContainer>

@@ -4,12 +4,14 @@ import {
   ProcessedGame,
 } from "../../shared/interfaces/game.interface";
 import GamesDetailed from "../Home/GamesDetailed";
+import GameCard from "../../components/GameCard";
 
 function Likes() {
   const [selectedGame, setSelectedGame] = useState<ProcessedGame | null>(null);
   const [loadingGameDetails, setLoadingGameDetails] = useState(false);
   const [gameDetails, setGameDetails] = useState<any>(null);
   const [userFavorites, setUserFavorites] = useState<number[]>([]);
+  const [favoriteGames, setFavoriteGames] = useState<DetailedGame[]>([]);
 
   useEffect(() => {
     const fetchUserFavorites = async () => {
@@ -32,8 +34,6 @@ function Likes() {
     };
     fetchUserFavorites();
   }, []);
-
-  const [favoriteGames, setFavoriteGames] = useState<DetailedGame[]>([]);
 
   useEffect(() => {
     const fetchUserFavorites = async () => {
@@ -64,9 +64,13 @@ function Likes() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
-      {favoriteGames.map((game) => (
-        <div>{game.name}</div>
-      ))}
+      <div className="flex flex-wrap justify-center items-center p-4 mx-auto">
+        {favoriteGames.map((game) => (
+          <div className="mb-4">
+            <GameCard game={game} showFavorite={false} />
+          </div>
+        ))}
+      </div>
 
       {selectedGame && (
         <GamesDetailed
