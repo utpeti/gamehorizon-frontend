@@ -26,7 +26,7 @@ export default function GamesContainer({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchGames = async () => {
+    async function fetchGames() {
       setLoading(true);
       try {
         const response = await fetch(
@@ -42,7 +42,7 @@ export default function GamesContainer({
       } finally {
         setLoading(false);
       }
-    };
+    }
 
     fetchGames();
   }, [endpoint, title]);
