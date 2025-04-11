@@ -3,6 +3,7 @@ import {
   RouterProvider,
   Outlet,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import HomePage from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
@@ -11,6 +12,7 @@ import Navbar from "./components/Navbar";
 import Browse from "./pages/Browse/Browse";
 import Likes from "./pages/Likes/Likes";
 import Error from "./pages/Error/Error";
+import PrivateRoute from "./components/PrivateRoute";
 
 function Layout() {
   const location = useLocation();
@@ -33,11 +35,19 @@ const router = createBrowserRouter([
     element: <Layout />,
     errorElement: <Error />,
     children: [
-      { path: "/", element: <HomePage /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
-      { path: "/browse", element: <Browse /> },
-      { path: "/likes", element: <Likes /> },
+
+      {
+        element: <PrivateRoute />,
+        children: [
+          { path: "/", element: <HomePage /> },
+          { path: "/browse", element: <Browse /> },
+          { path: "/likes", element: <Likes /> },
+        ],
+      },
+
+      { path: "*", element: <Navigate to="/" /> },
     ],
   },
 ]);

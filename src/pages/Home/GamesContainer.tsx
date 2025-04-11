@@ -61,8 +61,6 @@ export default function GamesContainer({
     );
   }
 
-  console.log(favs);
-
   return (
     <div>
       <h2 className="text-3xl font-bold text-[#F3E8EE] mb-3 mt-3">{title}</h2>
@@ -78,7 +76,9 @@ export default function GamesContainer({
               extraInfo={formatExtraInfo(game)}
               onClick={() => onGameClick(game)}
               onClickFav={() => onGameClickFav(game)}
-              isFavorite={favs.some((fav) => fav === game.id)}
+              isFavorite={
+                Array.isArray(favs) && favs.some((fav) => fav === game.id)
+              }
               showFavorite={true}
             />
           ))}
