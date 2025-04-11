@@ -16,7 +16,7 @@ function Browse() {
   const [userFavorites, setUserFavorites] = useState<number[]>([]);
 
   useEffect(() => {
-    const fetchUserFavorites = async () => {
+    async function fetchUserFavorites() {
       try {
         const response = await fetch(
           `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
@@ -33,7 +33,7 @@ function Browse() {
       } catch (error) {
         console.error("Error fetching user favorites:", error);
       }
-    };
+    }
     fetchUserFavorites();
   }, []);
 
@@ -50,7 +50,7 @@ function Browse() {
     }
   }
 
-  const fetchGameDetails = async (gameId: number) => {
+  async function fetchGameDetails(gameId: number) {
     setLoadingGameDetails(true);
     try {
       const response = await fetch(
@@ -63,7 +63,7 @@ function Browse() {
     } finally {
       setLoadingGameDetails(false);
     }
-  };
+  }
 
   async function addNewFavorite(gameId: number, game: ProcessedGame) {
     try {
@@ -91,19 +91,19 @@ function Browse() {
     }
   }
 
-  const handleGameClick = (game: ProcessedGame) => {
+  function handleGameClick(game: ProcessedGame) {
     setSelectedGame(game);
     fetchGameDetails(game.id);
-  };
+  }
 
-  const handleGameClickFav = (game: ProcessedGame) => {
+  function handleGameClickFav(game: ProcessedGame) {
     addNewFavorite(game.id, game);
-  };
+  }
 
-  const closeModal = () => {
+  function closeModal() {
     setSelectedGame(null);
     setGameDetails(null);
-  };
+  }
 
   return (
     <>

@@ -10,11 +10,11 @@ interface EventCardProps {
 export default function EventCard({ event, extraInfo }: EventCardProps) {
   const tooltipId = useId();
 
-  const handleCardClick = () => {
+  function handleCardClick() {
     if (event.live_stream_url) {
       window.open(event.live_stream_url, "_blank", "noopener,noreferrer");
     }
-  };
+  }
 
   const tooltipStyle = {
     backgroundColor: "rgba(0, 0, 0, 0.9)",
