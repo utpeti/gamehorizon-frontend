@@ -21,7 +21,7 @@ export default function Navbar() {
     userLogout();
     navigate("/login");
   }
-  //text-indigo-500
+
   return (
     <nav className="bg-gray-200 shadow shadow-gray-300 w-full px-8 md:px-auto fixed top-0 z-20">
       <div className="md:h-16 h-28 mx-auto md:px-4 container flex items-center justify-between flex-wrap md:flex-nowrap">

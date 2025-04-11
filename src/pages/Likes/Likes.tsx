@@ -6,7 +6,7 @@ import {
 import GamesDetailed from "../Home/GamesDetailed";
 import GameCard from "../../components/GameCard";
 
-function Likes() {
+export default function Likes() {
   const [selectedGame, setSelectedGame] = useState<ProcessedGame | null>(null);
   const [loadingGameDetails, setLoadingGameDetails] = useState(false);
   const [gameDetails, setGameDetails] = useState<any>(null);
@@ -106,5 +106,3 @@ function Likes() {
     </div>
   );
 }
-
-export default Likes;

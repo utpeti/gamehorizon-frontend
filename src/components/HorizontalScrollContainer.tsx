@@ -21,14 +21,14 @@ export default function HorizontalScrollContainer({
       }
     };
 
-    const handleScroll = () => {
+    function handleScroll() {
       if (scrollContainerRef.current) {
         const { scrollLeft, scrollWidth, clientWidth } =
           scrollContainerRef.current;
         setShowLeftArrow(scrollLeft > 0);
         setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 5);
       }
-    };
+    }
 
     const scrollContainer = scrollContainerRef.current;
     if (scrollContainer) {
@@ -46,23 +46,23 @@ export default function HorizontalScrollContainer({
     }
   }, []);
 
-  const scrollLeft = () => {
+  function scrollLeft() {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
         left: -scrollDistance,
         behavior: "smooth",
       });
     }
-  };
+  }
 
-  const scrollRight = () => {
+  function scrollRight() {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
         left: scrollDistance,
         behavior: "smooth",
       });
     }
-  };
+  }
 
   return (
     <div className="relative mb-2">

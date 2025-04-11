@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import InputSection from "../../components/InputSection";
 
-function Register() {
+export default function Register() {
   const [userInputValue, setUserInputValue] = useState<string>("");
   const [passwordInputValue, setPasswordInputValue] = useState<string>("");
   const [confirmPasswordInputValue, setConfirmPasswordInputValue] =
@@ -78,5 +78,3 @@ function Register() {
     </div>
   );
 }
-
-export default Register;

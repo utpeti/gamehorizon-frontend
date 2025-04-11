@@ -7,7 +7,7 @@ import {
 } from "../../shared/interfaces/game.interface";
 import GamesDetailed from "../Home/GamesDetailed";
 
-function Browse() {
+export default function Browse() {
   const userInputRef = useRef<HTMLInputElement>(null);
   const [searchedGames, setSearchedGames] = useState<DetailedGame[]>([]);
   const [selectedGame, setSelectedGame] = useState<ProcessedGame | null>(null);
@@ -134,5 +134,3 @@ function Browse() {
     </>
   );
 }
-
-export default Browse;

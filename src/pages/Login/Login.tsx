@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import InputSection from "../../components/InputSection";
 
-function Login() {
+export default function Login() {
   const [userInputValue, setUserInputValue] = useState<string>("");
   const [passwordInputValue, setPasswordInputValue] = useState<string>("");
   const [, setLoading] = useState(true);
@@ -80,5 +80,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;
