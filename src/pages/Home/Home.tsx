@@ -30,7 +30,6 @@ function HomePage() {
       }
     };
     fetchUserFavorites();
-    console.log(localStorage);
   }, []);
 
   const fetchGameDetails = async (gameId: number) => {

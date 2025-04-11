@@ -29,7 +29,7 @@ function Login() {
       );
       const resData = await response.json();
       if (response.status === 200) {
-        localStorage.setItem("token", resData.token);
+        localStorage.setItem("token", resData.user.id);
         window.location.href = "/";
       }
       if (response.status !== 200) {
