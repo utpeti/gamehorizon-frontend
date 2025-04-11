@@ -14,29 +14,7 @@ function Likes() {
   const [favoriteGames, setFavoriteGames] = useState<DetailedGame[]>([]);
 
   useEffect(() => {
-    const fetchUserFavorites = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
-          {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const data = await response.json();
-        setUserFavorites(data);
-      } catch (error) {
-        console.error("Error fetching user favorites:", error);
-      }
-    };
-    fetchUserFavorites();
-  }, []);
-
-  useEffect(() => {
-    const fetchUserFavorites = async () => {
+    async function fetchUserFavorites() {
       try {
         const response = await fetch(
           `${import.meta.env.VITE_SERVER_API_URL}/igdb/liked-games`,
@@ -53,11 +31,11 @@ function Likes() {
       } catch (error) {
         console.error("Error fetching user favorites:", error);
       }
-    };
+    }
     fetchUserFavorites();
   }, [userFavorites]);
 
-  const fetchGameDetails = async (gameId: number) => {
+  async function fetchGameDetails(gameId: number) {
     setLoadingGameDetails(true);
     try {
       const response = await fetch(
@@ -70,34 +48,36 @@ function Likes() {
     } finally {
       setLoadingGameDetails(false);
     }
-  };
+  }
 
   async function removeGame(game: ProcessedGame) {
     const gameId = game.id;
     try {
-      await fetch(`${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`, {
-        method: "DELETE",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ gameId }),
-      });
+      await fetch(
+        `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games/${gameId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       setUserFavorites((prev) => prev.filter((id) => id !== gameId));
     } catch (error) {
       console.error("Error toggling favorite:", error);
     }
   }
 
-  const closeModal = () => {
+  function closeModal() {
     setSelectedGame(null);
     setGameDetails(null);
-  };
+  }
 
-  const handleGameClick = (game: ProcessedGame) => {
+  function handleGameClick(game: ProcessedGame) {
     setSelectedGame(game);
     fetchGameDetails(game.id);
-  };
+  }
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
