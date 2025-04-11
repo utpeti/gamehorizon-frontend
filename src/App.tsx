@@ -10,6 +10,7 @@ import Register from "./pages/Register/Register";
 import Navbar from "./components/Navbar";
 import Browse from "./pages/Browse/Browse";
 import Likes from "./pages/Likes/Likes";
+import Error from "./pages/Error/Error";
 
 function Layout() {
   const location = useLocation();
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <Error />,
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/login", element: <Login /> },
