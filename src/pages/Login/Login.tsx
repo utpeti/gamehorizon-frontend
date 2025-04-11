@@ -28,10 +28,8 @@ function Login() {
         }
       );
       const resData = await response.json();
-      console.log("Response data:", resData);
-      console.log("Response status:", response.status);
       if (response.status === 200) {
-        localStorage.setItem("token", resData.token);
+        localStorage.setItem("token", resData.user.id);
         window.location.href = "/";
       }
       if (response.status !== 200) {

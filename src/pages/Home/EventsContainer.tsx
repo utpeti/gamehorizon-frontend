@@ -58,7 +58,7 @@ export default function UpcomingEvents() {
     <div>
       <h2 className="text-3xl font-bold text-[#F3E8EE]">Upcoming Events</h2>
 
-      {events.length === 0 ? (
+      {!Array.isArray(events) || events.length === 0 ? (
         <p className="text-gray-500">No upcoming events found.</p>
       ) : (
         <HorizontalScrollContainer>
