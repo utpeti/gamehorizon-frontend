@@ -28,16 +28,16 @@ function Login() {
         }
       );
       const resData = await response.json();
-      if (response.status === 200) {
+      if (response.ok) {
         localStorage.setItem("token", resData.user.id);
         window.location.href = "/";
       }
-      if (response.status !== 200) {
+      if (!response.ok) {
         throw new Error(resData.message || "Failed to login");
       }
-    } catch (err) {
-      console.error("Error while logging in", err);
-      setError(err instanceof Error ? err.message : "Failed to login");
+    } catch (error) {
+      console.error("Error while logging in: ", error);
+      setError(error instanceof Error ? error.message : "Failed to login");
     } finally {
       setLoading(false);
     }
