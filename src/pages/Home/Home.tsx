@@ -24,7 +24,7 @@ export default function HomePage() {
           }
         );
         const data = await response.json();
-        setUserFavorites(data);
+        setUserFavorites(data.games);
       } catch (error) {
         console.error("Error fetching user favorites:", error);
       }
@@ -95,7 +95,7 @@ export default function HomePage() {
           );
 
           const data = await updated.json();
-          setUserFavorites(data);
+          setUserFavorites(data.games);
         }
       }
     } catch (error) {

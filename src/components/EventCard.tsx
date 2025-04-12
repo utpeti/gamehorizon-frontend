@@ -62,7 +62,7 @@ export default function EventCard({ event, extraInfo }: EventCardProps) {
         <Tooltip
           id={tooltipId}
           place="top"
-          style={tooltipStyle}
+          border={tooltipStyle.border}
           className="event-tooltip"
         >
           <div>
