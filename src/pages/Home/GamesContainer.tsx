@@ -30,7 +30,14 @@ export default function GamesContainer({
       setLoading(true);
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_SERVER_API_URL}/igdb/${endpoint}`
+          `${import.meta.env.VITE_SERVER_API_URL}/${endpoint}`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
         const resData = await response.json();
         setGames(resData);
