@@ -7,7 +7,7 @@ import {
 } from "../../shared/interfaces/game.interface";
 import GamesDetailed from "../Home/GamesDetailed";
 
-function Browse() {
+export default function Browse() {
   const userInputRef = useRef<HTMLInputElement>(null);
   const [searchedGames, setSearchedGames] = useState<DetailedGame[]>([]);
   const [selectedGame, setSelectedGame] = useState<ProcessedGame | null>(null);
@@ -16,7 +16,7 @@ function Browse() {
   const [userFavorites, setUserFavorites] = useState<number[]>([]);
 
   useEffect(() => {
-    const fetchUserFavorites = async () => {
+    async function fetchUserFavorites() {
       try {
         const response = await fetch(
           `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
@@ -29,11 +29,11 @@ function Browse() {
           }
         );
         const data = await response.json();
-        setUserFavorites(data);
+        setUserFavorites(data.games);
       } catch (error) {
         console.error("Error fetching user favorites:", error);
       }
-    };
+    }
     fetchUserFavorites();
   }, []);
 
@@ -50,7 +50,7 @@ function Browse() {
     }
   }
 
-  const fetchGameDetails = async (gameId: number) => {
+  async function fetchGameDetails(gameId: number) {
     setLoadingGameDetails(true);
     try {
       const response = await fetch(
@@ -63,47 +63,77 @@ function Browse() {
     } finally {
       setLoadingGameDetails(false);
     }
-  };
+  }
 
-  async function addNewFavorite(gameId: number, game: ProcessedGame) {
+  async function addNewFavorite(gameId: number) {
+    const isLiked = userFavorites.includes(gameId);
+
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ gameId }),
-        }
-      );
-
-      if (response.status === 201) {
-        setUserFavorites((prev) =>
-          prev.some((fav) => fav === game.id) ? prev : [...prev, game.id]
+      if (isLiked) {
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games/${gameId}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
-      } else if (response.status === 400) {
-        setUserFavorites((prev) => prev.filter((fav) => fav !== game.id));
+
+        if (response.ok) {
+          setUserFavorites((prev) => prev.filter((fav) => fav !== gameId));
+        } else {
+          const errorMessage = await response.text();
+          console.error("Failed to remove favorite:", errorMessage);
+        }
+      } else {
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ gameId }),
+          }
+        );
+
+        if (response.ok) {
+          const updated = await fetch(
+            `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
+            {
+              method: "GET",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const data = await updated.json();
+          setUserFavorites(data.games);
+        }
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);
     }
   }
 
-  const handleGameClick = (game: ProcessedGame) => {
+  function handleGameClick(game: ProcessedGame) {
     setSelectedGame(game);
     fetchGameDetails(game.id);
-  };
+  }
 
-  const handleGameClickFav = (game: ProcessedGame) => {
-    addNewFavorite(game.id, game);
-  };
+  function handleGameClickFav(game: ProcessedGame) {
+    addNewFavorite(game.id);
+  }
 
-  const closeModal = () => {
+  function closeModal() {
     setSelectedGame(null);
     setGameDetails(null);
-  };
+  }
 
   return (
     <>
@@ -134,5 +164,3 @@ function Browse() {
     </>
   );
 }
-
-export default Browse;

@@ -44,8 +44,6 @@ export default function GamesDetailed({
     }, 400);
   };
 
-  console.log("Game Details:", gameDetails);
-
   return (
     <div
       className={`fixed inset-0 z-50 flex justify-center items-center bg-black/60 backdrop-blur-lg transition-opacity duration-400 ${

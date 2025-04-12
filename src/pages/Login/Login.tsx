@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import InputSection from "../../components/InputSection";
 
-function Login() {
+export default function Login() {
   const [userInputValue, setUserInputValue] = useState<string>("");
   const [passwordInputValue, setPasswordInputValue] = useState<string>("");
   const [, setLoading] = useState(true);
@@ -28,16 +28,16 @@ function Login() {
         }
       );
       const resData = await response.json();
-      if (response.status === 200) {
+      if (response.ok) {
         localStorage.setItem("token", resData.user.id);
         window.location.href = "/";
       }
-      if (response.status !== 200) {
+      if (!response.ok) {
         throw new Error(resData.message || "Failed to login");
       }
-    } catch (err) {
-      console.error("Error while logging in", err);
-      setError(err instanceof Error ? err.message : "Failed to login");
+    } catch (error) {
+      console.error("Error while logging in: ", error);
+      setError(error instanceof Error ? error.message : "Failed to login");
     } finally {
       setLoading(false);
     }
@@ -80,5 +80,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;

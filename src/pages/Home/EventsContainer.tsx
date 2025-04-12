@@ -10,7 +10,7 @@ export default function UpcomingEvents() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const getEventsFetch = async () => {
+    async function getEventsFetch() {
       setLoading(true);
       try {
         const data = await fetch(
@@ -35,7 +35,7 @@ export default function UpcomingEvents() {
       } finally {
         setLoading(false);
       }
-    };
+    }
 
     getEventsFetch();
   }, []);

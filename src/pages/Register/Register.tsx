@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import InputSection from "../../components/InputSection";
 
-function Register() {
+export default function Register() {
   const [userInputValue, setUserInputValue] = useState<string>("");
   const [passwordInputValue, setPasswordInputValue] = useState<string>("");
   const [confirmPasswordInputValue, setConfirmPasswordInputValue] =
@@ -32,9 +32,9 @@ function Register() {
       if (response.status === 201) {
         window.location.href = "/login";
       }
-    } catch (err) {
-      console.error("Error while logging in", err);
-      setError(err instanceof Error ? err.message : "Failed to login");
+    } catch (error) {
+      console.error("Error while logging in", error);
+      setError(error instanceof Error ? error.message : "Failed to login");
     } finally {
       setLoading(false);
     }
@@ -43,6 +43,9 @@ function Register() {
   function handleChange() {
     if (userInputRef.current) {
       setUserInputValue(userInputRef.current.value);
+    }
+    if (confirmPasswordInputRef.current) {
+      setConfirmPasswordInputValue(confirmPasswordInputRef.current.value);
     }
     if (passwordInputRef.current) {
       setPasswordInputValue(passwordInputRef.current.value);
@@ -75,5 +78,3 @@ function Register() {
     </div>
   );
 }
-
-export default Register;

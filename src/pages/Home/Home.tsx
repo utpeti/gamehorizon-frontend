@@ -4,14 +4,14 @@ import UpcomingEvents from "./EventsContainer";
 import { ProcessedGame } from "../../shared/interfaces/game.interface";
 import GamesDetailed from "./GamesDetailed";
 
-function HomePage() {
+export default function HomePage() {
   const [selectedGame, setSelectedGame] = useState<ProcessedGame | null>(null);
   const [loadingGameDetails, setLoadingGameDetails] = useState(false);
   const [gameDetails, setGameDetails] = useState<any>(null);
   const [userFavorites, setUserFavorites] = useState<number[]>([]);
 
   useEffect(() => {
-    const fetchUserFavorites = async () => {
+    async function fetchUserFavorites() {
       try {
         const response = await fetch(
           `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
@@ -24,15 +24,15 @@ function HomePage() {
           }
         );
         const data = await response.json();
-        setUserFavorites(data);
+        setUserFavorites(data.games);
       } catch (error) {
         console.error("Error fetching user favorites:", error);
       }
-    };
+    }
     fetchUserFavorites();
   }, []);
 
-  const fetchGameDetails = async (gameId: number) => {
+  async function fetchGameDetails(gameId: number) {
     setLoadingGameDetails(true);
     try {
       const response = await fetch(
@@ -40,52 +40,82 @@ function HomePage() {
       );
       const data = await response.json();
       setGameDetails(data);
-    } catch (err) {
-      console.error("Error fetching game details:", err);
+    } catch (error) {
+      console.error("Error fetching game details:", error);
     } finally {
       setLoadingGameDetails(false);
     }
-  };
+  }
 
-  async function addNewFavorite(gameId: number, game: ProcessedGame) {
+  async function addNewFavorite(gameId: number) {
+    const isLiked = userFavorites.includes(gameId);
+
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ gameId }),
-        }
-      );
-
-      if (response.status === 201) {
-        setUserFavorites((prev) =>
-          prev.some((fav) => fav === game.id) ? prev : [...prev, game.id]
+      if (isLiked) {
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games/${gameId}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
-      } else if (response.status === 400) {
-        setUserFavorites((prev) => prev.filter((fav) => fav !== game.id));
+
+        if (response.ok) {
+          setUserFavorites((prev) => prev.filter((fav) => fav !== gameId));
+        } else {
+          const errorMessage = await response.text();
+          console.error("Failed to remove favorite:", errorMessage);
+        }
+      } else {
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ gameId }),
+          }
+        );
+
+        if (response.ok) {
+          const updated = await fetch(
+            `${import.meta.env.VITE_SERVER_API_URL}/users/liked-games`,
+            {
+              method: "GET",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const data = await updated.json();
+          setUserFavorites(data.games);
+        }
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);
     }
   }
 
-  const handleGameClick = (game: ProcessedGame) => {
+  function handleGameClick(game: ProcessedGame) {
     setSelectedGame(game);
     fetchGameDetails(game.id);
-  };
+  }
 
-  const handleGameClickFav = (game: ProcessedGame) => {
-    addNewFavorite(game.id, game);
-  };
+  function handleGameClickFav(game: ProcessedGame) {
+    addNewFavorite(game.id);
+  }
 
-  const closeModal = () => {
+  function closeModal() {
     setSelectedGame(null);
     setGameDetails(null);
-  };
+  }
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
@@ -141,5 +171,3 @@ function HomePage() {
     </div>
   );
 }
-
-export default HomePage;
