@@ -129,6 +129,21 @@ export default function HomePage() {
       </div>
       <div className="w-4/5 mx-auto mb-16">
         <GamesContainer
+          endpoint="popular"
+          title="Most Popular"
+          formatExtraInfo={(game: ProcessedGame) => (
+            <p className="text-sm text-gray-400 mt-1">
+              Released on: {game.release_date} <br />
+            </p>
+          )}
+          onGameClick={handleGameClick}
+          onGameClickFav={handleGameClickFav}
+          favs={userFavorites}
+        />
+      </div>
+
+      <div className="w-4/5 mx-auto mb-16">
+        <GamesContainer
           endpoint="latest"
           title="Latest Releases"
           formatExtraInfo={(game: ProcessedGame) => (
