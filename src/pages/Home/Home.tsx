@@ -130,7 +130,7 @@ export default function HomePage() {
       <div className="w-4/5 mx-auto mb-16">
         <GamesContainer
           endpoint="knnserver/recommend"
-          title="Most Popular"
+          title="Recommended"
           formatExtraInfo={(game: ProcessedGame) => (
             <p className="text-sm text-gray-400 mt-1">
               Released on: {game.release_date} <br />
