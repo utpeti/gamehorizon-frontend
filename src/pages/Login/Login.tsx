@@ -29,7 +29,6 @@ export default function Login() {
       );
       const resData = await response.json();
       if (response.ok) {
-        localStorage.setItem("token", resData.user.id);
         window.location.href = "/";
       }
       if (!response.ok) {
