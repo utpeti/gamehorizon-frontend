@@ -1,7 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
 
   async function userLogout() {
     try {
@@ -19,6 +21,7 @@ export default function Navbar() {
 
   function handleClick() {
     userLogout();
+    logout();
     navigate("/login");
   }
 
