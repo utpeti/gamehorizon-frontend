@@ -25,9 +25,11 @@ export default function SearchField({
   }
 
   return (
+    <>
+    {firstSearch && <img src="/public/logo.png" alt="Logo" width={250} height={250} className="mx-auto pt-50"/>}
     <div
       className={`flex items-center justify-center transition-all duration-800 ease-linear ${
-        firstSearch ? "h-screen" : "pt-20 pb-10"
+        firstSearch ? "mt-4" : "pt-20 pb-10"
       }`}
     >
       <div className="flex px-4 py-3 rounded-xl border-2 border-gray-600 bg-gray-200 w-4/5 transition-all duration-500 ease-linear">
@@ -51,5 +53,6 @@ export default function SearchField({
         </button>
       </div>
     </div>
+    </>
   );
 }
