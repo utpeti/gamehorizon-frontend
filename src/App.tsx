@@ -1,3 +1,4 @@
+// src/App.jsx
 import {
   createBrowserRouter,
   RouterProvider,
@@ -12,7 +13,8 @@ import Navbar from "./components/Navbar";
 import Browse from "./pages/Browse/Browse";
 import Likes from "./pages/Likes/Likes";
 import Error from "./pages/Error/Error";
-import PrivateRoute from "./components/PrivateRoute";
+import ProtectedRoutes from "./assets/ProtectedRoutes";
+import { AuthProvider } from "./components/AuthContext.tsx";
 
 function Layout() {
   const location = useLocation();
@@ -39,7 +41,7 @@ const router = createBrowserRouter([
       { path: "/register", element: <Register /> },
 
       {
-        element: <PrivateRoute />,
+        element: <ProtectedRoutes />,
         children: [
           { path: "/", element: <HomePage /> },
           { path: "/browse", element: <Browse /> },
@@ -53,7 +55,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }
 
 export default App;

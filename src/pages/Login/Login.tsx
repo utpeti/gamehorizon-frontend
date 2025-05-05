@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
+import { useAuth } from "../../components/AuthContext";
 import InputSection from "../../components/InputSection";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [userInputValue, setUserInputValue] = useState<string>("");
@@ -8,6 +10,11 @@ export default function Login() {
   const [, setError] = useState<string | null>(null);
   const userInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
+  const from = location.state?.from?.pathname || "/";
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     setLoading(true);
@@ -29,8 +36,8 @@ export default function Login() {
       );
       const resData = await response.json();
       if (response.ok) {
-        localStorage.setItem("token", resData.user.id);
-        window.location.href = "/";
+        login();
+        navigate(from, { replace: true });
       }
       if (!response.ok) {
         throw new Error(resData.message || "Failed to login");
