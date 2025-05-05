@@ -7,6 +7,37 @@ interface FilterWindowProps {
 export default function FilterWindow({ setFilterWindow }: FilterWindowProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [genres, setGenres] = useState<any[]>([]);
+  const [platforms, setPlatforms] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchGenres() {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_API_URL}/igdb/genres`
+        );
+        const data = await response.json();
+        setGenres(data);
+      } catch (error) {
+        console.error("Error fetching genres:", error);
+      }
+    }
+
+    async function fetchPlatforms() {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_SERVER_API_URL}/igdb/platforms`
+        );
+        const data = await response.json();
+        setPlatforms(data);
+      } catch (error) {
+        console.error("Error fetching platforms:", error);
+      }
+    }
+
+    fetchGenres();
+    fetchPlatforms();
+  });
 
   useEffect(() => {
     const originalStyle = window.getComputedStyle(document.body).overflow;
@@ -58,7 +89,22 @@ export default function FilterWindow({ setFilterWindow }: FilterWindowProps) {
           multiple
           className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
-          <option value="something">something</option>
+          {genres.map((genre) => (
+            <option key={genre.id} value={genre.name}>
+              {genre.name}
+            </option>
+          ))}
+        </select>
+        <h3 className="text-sm text-[#F3E8EE] mt-4">Genres</h3>
+        <select
+          multiple
+          className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          {platforms.map((platform) => (
+            <option key={platform.id} value={platform.name}>
+              {platform.name}
+            </option>
+          ))}
         </select>
         <button
           onClick={() => setFilterWindow(false)}
