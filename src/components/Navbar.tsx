@@ -31,7 +31,7 @@ export default function Navbar() {
         <div className="text-gray-500 order-3 w-full md:w-auto md:order-2">
           <ul className="flex font-semibold justify-between">
             <li>
-              <img src="/public/logo.png" alt="Logo" width={40} height={40}/>
+              <img src="/logo.png" alt="Logo" width={40} height={40} />
             </li>
             <li className="md:px-4 md:py-2 hover:text-indigo-400">
               <Link to="/">Home</Link>
