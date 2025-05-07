@@ -127,20 +127,32 @@ export default function HomePage() {
           All that's gaming in one place
         </p>
       </div>
-      <div className="w-4/5 mx-auto mb-16">
-        <GamesContainer
-          endpoint="knnserver/recommend"
-          title="Recommended"
-          formatExtraInfo={(game: ProcessedGame) => (
-            <p className="text-sm text-gray-400 mt-1">
-              Released on: {game.release_date} <br />
-            </p>
-          )}
-          onGameClick={handleGameClick}
-          onGameClickFav={handleGameClickFav}
-          favs={userFavorites}
-        />
-      </div>
+      {userFavorites.length !== 0 ? (
+        <div className="w-4/5 mx-auto mb-16">
+          <GamesContainer
+            endpoint="knnserver/recommend"
+            title="Recommended"
+            formatExtraInfo={(game: ProcessedGame) => (
+              <p className="text-sm text-gray-400 mt-1">
+                Released on: {game.release_date} <br />
+              </p>
+            )}
+            onGameClick={handleGameClick}
+            onGameClickFav={handleGameClickFav}
+            favs={userFavorites}
+          />
+        </div>
+      ) : (
+        <div>
+          <h2 className="text-3xl font-bold text-[#F3E8EE] mb-3 mt-3 w-4/5 mx-auto">
+            No recommendations available
+          </h2>
+          <p className="text-gray-500 w-4/5 mx-auto">
+            Please add some games to your favorites to get personalized
+            recommendations.
+          </p>
+        </div>
+      )}
 
       <div className="w-4/5 mx-auto mb-16">
         <GamesContainer
