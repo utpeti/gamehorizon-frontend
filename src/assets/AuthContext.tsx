@@ -36,13 +36,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       );
       const resData = await response.json();
-      if (resData.status === 200) {
-        return true;
+
+      if (resData.user === null) {
+        setIsAuthenticated(false);
       } else {
-        return false;
+        setIsAuthenticated(true);
       }
     } catch (error) {
-      return false;
+      setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
     }
