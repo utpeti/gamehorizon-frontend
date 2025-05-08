@@ -14,7 +14,7 @@ import Browse from "./pages/Browse/Browse";
 import Likes from "./pages/Likes/Likes";
 import Error from "./pages/Error/Error";
 import ProtectedRoutes from "./assets/ProtectedRoutes";
-import { AuthProvider } from "./components/AuthContext.tsx";
+import { AuthProvider } from "./assets/AuthContext.tsx";
 
 function Layout() {
   const location = useLocation();

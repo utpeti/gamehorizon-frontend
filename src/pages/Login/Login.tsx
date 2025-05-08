@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useAuth } from "../../components/AuthContext";
+import { useAuth } from "../../assets/AuthContext";
 import InputSection from "../../components/InputSection";
 import { useLocation, useNavigate } from "react-router-dom";
 

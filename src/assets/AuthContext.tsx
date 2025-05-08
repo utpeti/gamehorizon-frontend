@@ -35,11 +35,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           },
         }
       );
-      setIsAuthenticated(response.ok);
-      console.log(response);
+      const resData = await response.json();
+      if (resData.status === 200) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (error) {
       console.error("Auth check failed", error);
-      setIsAuthenticated(false);
+      return false;
     } finally {
       setIsLoading(false);
     }
