@@ -4,11 +4,15 @@ import FilterWindow from "./FilterWindow";
 interface SearchFieldProps {
   searchGames: () => void;
   userInputRef: React.RefObject<HTMLInputElement | null>;
+  searchValue: string | undefined;
+  setSearchedGames: (games: any[]) => void;
 }
 
 export default function SearchField({
   searchGames,
   userInputRef,
+  searchValue,
+  setSearchedGames,
 }: SearchFieldProps) {
   const [firstSearch, setFirstSearch] = useState(true);
   const [filterWindow, setFilterWindow] = useState(false);
@@ -32,7 +36,13 @@ export default function SearchField({
 
   return (
     <>
-      {filterWindow && <FilterWindow setFilterWindow={setFilterWindow} />}
+      {filterWindow && (
+        <FilterWindow
+          setFilterWindow={setFilterWindow}
+          searchValue={searchValue}
+          setSearchedGames={setSearchedGames}
+        />
+      )}
       {firstSearch && (
         <img
           src="/logo.png"

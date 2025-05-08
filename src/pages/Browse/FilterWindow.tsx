@@ -2,9 +2,15 @@ import { useState, useEffect } from "react";
 
 interface FilterWindowProps {
   setFilterWindow: (value: boolean) => void;
+  searchValue: string | undefined;
+  setSearchedGames: (games: any[]) => void;
 }
 
-export default function FilterWindow({ setFilterWindow }: FilterWindowProps) {
+export default function FilterWindow({
+  setFilterWindow,
+  searchValue,
+  setSearchedGames,
+}: FilterWindowProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [genres, setGenres] = useState<any[]>([]);
@@ -71,15 +77,20 @@ export default function FilterWindow({ setFilterWindow }: FilterWindowProps) {
       genres: selectedGenres,
       platforms: selectedPlatforms,
     };
-
     try {
-      await fetch(`${import.meta.env.VITE_SERVER_API_URL}/search`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_API_URL}/igdb/search/${searchValue}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setSearchedGames(data);
     } catch (error) {
       console.error("Error sending filters:", error);
     }
@@ -131,8 +142,8 @@ export default function FilterWindow({ setFilterWindow }: FilterWindowProps) {
           }
           className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
-          {genres.map((genre) => (
-            <option key={genre.id} value={genre.name}>
+          {platforms.map((genre) => (
+            <option key={genre.id} value={genre.id}>
               {genre.name}
             </option>
           ))}
@@ -148,8 +159,8 @@ export default function FilterWindow({ setFilterWindow }: FilterWindowProps) {
           }
           className="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
-          {platforms.map((platform) => (
-            <option key={platform.id} value={platform.name}>
+          {genres.map((platform) => (
+            <option key={platform.id} value={platform.id}>
               {platform.name}
             </option>
           ))}
