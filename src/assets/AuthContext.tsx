@@ -35,9 +35,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           },
         }
       );
-      setIsAuthenticated(response.ok);
+      const resData = await response.json();
+
+      if (resData.user === null) {
+        setIsAuthenticated(false);
+      } else {
+        setIsAuthenticated(true);
+      }
     } catch (error) {
-      console.error("Auth check failed", error);
       setIsAuthenticated(false);
     } finally {
       setIsLoading(false);

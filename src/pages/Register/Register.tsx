@@ -54,10 +54,13 @@ export default function Register() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex justify-center items-center pt-8 pb-16">
+        <img src="/logo.png" alt="Logo" width={200} height={200} />
+      </div>
+      <div className="flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold text-[#F3E8EE] mb-8">Register</h1>
         <form
-          className="bg-white p-6 rounded-lg shadow-md w-1/2 h-2/5"
+          className="bg-gradient-to-b from-stone-500 to-indigo-300 p-6 rounded-lg shadow-md w-96"
           onSubmit={submit}
         >
           <InputSection labelText="email" inputRef={userInputRef} />

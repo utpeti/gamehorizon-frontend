@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useAuth } from "../../components/AuthContext";
+import { useAuth } from "../../assets/AuthContext";
 import InputSection from "../../components/InputSection";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -61,10 +61,13 @@ export default function Login() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex justify-center items-center pt-8 pb-16">
+        <img src="/logo.png" alt="Logo" width={200} height={200} />
+      </div>
+      <div className="flex flex-col items-center justify-center">
         <h1 className="text-4xl font-bold text-[#F3E8EE] mb-8">Login</h1>
         <form
-          className="bg-white p-6 rounded-lg shadow-md w-96"
+          className="bg-gradient-to-b from-stone-500 to-indigo-300 p-6 rounded-lg shadow-md w-96"
           onSubmit={submit}
         >
           <InputSection labelText="email" inputRef={userInputRef} />
@@ -79,7 +82,10 @@ export default function Login() {
         </form>
         <p className="mt-4 text-gray-600">
           Don't have an account?{" "}
-          <a href="/register" className="text-blue-500 hover:text-blue-700">
+          <a
+            href="/register"
+            className="text-blue-500 hover:text-blue-700  mb-40"
+          >
             Register here
           </a>
         </p>

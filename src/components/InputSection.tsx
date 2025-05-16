@@ -14,7 +14,7 @@ export default function InputSection({
       </label>
       <input
         ref={inputRef}
-        type={labelText === "password" ? "password" : "text"}
+        type={labelText === "email" ? "text" : "password"}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       />
     </div>

@@ -138,7 +138,12 @@ export default function Browse() {
   return (
     <>
       <div className="fixed inset-0 overflow-y-auto bg-gradient-to-b from-indigo-900 via-stone-700 to-stone-900">
-        <SearchField searchGames={searchGames} userInputRef={userInputRef} />
+        <SearchField
+          searchGames={searchGames}
+          userInputRef={userInputRef}
+          searchValue={userInputRef.current?.value}
+          setSearchedGames={setSearchedGames}
+        />
         <div className="flex flex-wrap justify-center items-center p-4 mx-auto">
           {searchedGames.map((game) => (
             <div key={game.id} className="mb-4">
